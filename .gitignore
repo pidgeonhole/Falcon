@@ -1,0 +1,28 @@
+# Distributions and mappings
+node_modules/
+bin/
+eggs/
+dist/
+develop-eggs/
+var/
+parts/
+sdist/
+*.egg-info/
+npm-debug.log
+.installed.cfg
+*.egg
+
+# C extensions
+*.so
+
+# Python Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Python install logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Editor files
+.idea/
+*.DS_Store
