@@ -1,0 +1,8 @@
+Local Test
+python local_test.py
+
+Live Reloading the Javascript/css files for development
+npm start (preferred)
+
+Packing the Javascript/css files for production
+webpack -p

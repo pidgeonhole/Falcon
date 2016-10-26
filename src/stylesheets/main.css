@@ -1,0 +1,9 @@
+nav.top-nav {
+  height: 122px;
+  box-shadow: none;
+}
+
+.layout-fill {
+  width: 100%;
+  height: 100%;
+}

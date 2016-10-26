@@ -5,31 +5,28 @@ const webpack = require('webpack');
 const webpack_dev_server = require('webpack-dev-server');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-// Development variables
-const entryFile = path.join(__dirname, "src", "index.js");
-const outputPath = path.join(__dirname, 'CodeQuiz', 'static');
-
 const base = "bundle";
 
 module.exports = {
     devServer: {
-      contentBase: './CodeQuiz/static',
-      hot: true
+        contentBase: './CodeQuiz/static',
+        hot: true
     },
     entry: [
-        `webpack-dev-server/client?http://localhost:8081`, //client portion of dev server
+        'webpack-dev-server/client?http://localhost:8081', //client portion of dev server
         'webpack/hot/only-dev-server', // hot loading
         './src/index.js' // Entry path for bundling process
     ],
     output: {
         path: './CodeQuiz/static',
-        filename: `${base}.js`, // where my bundle is stored
+        filename: `${base}.[name].js`, // where my bundle is stored
         publicPath: '/'
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(), // for hot reloading
         new webpack.NoErrorsPlugin(), // prevent bundling if there's erroneous codes,
-        new ExtractTextPlugin(`${base}.css`)
+        new ExtractTextPlugin(`${base}.[name].css`),
+        new webpack.ProvidePlugin({$: "jquery", jquery: "jquery"})
     ],
     resolve: {
         extensions: ['', '.js']
