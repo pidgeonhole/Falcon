@@ -1,6 +1,7 @@
 from flask import Flask
 
 from CodeQuiz.blueprints.home import home
+from CodeQuiz.blueprints.testAPI import testAPI
 from CodeQuiz.extensions import extends
 
 
@@ -21,6 +22,7 @@ def create_app(settings_override=None):
 
     # Register blueprints here
     app.register_blueprint(home)
+    app.register_blueprint(testAPI, url_prefix="/test")
 
     # Extend app to use other 3rd-party flask libraries
     app = extends(app)

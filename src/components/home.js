@@ -1,8 +1,7 @@
-'use strict';
-
 import React, {Component} from 'react';
 import CardIntro from './cardIntro';
 import QuestionList from './questionList';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 export default class Home extends Component {
 
@@ -12,10 +11,12 @@ export default class Home extends Component {
 
     render() {
         return (
-            <div>
-                <CardIntro/>
-                <QuestionList/>
-            </div>
+            <MuiThemeProvider>
+                <div>
+                    <CardIntro/>
+                    <QuestionList/>
+                </div>
+            </MuiThemeProvider>
         );
     }
 }

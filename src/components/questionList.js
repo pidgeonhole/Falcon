@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import ajax from 'superagent';
+import {Link} from 'react-router';
+import request from 'superagent';
 import config from '../config';
 import {Collapsible, CollapsibleItem} from 'react-materialize';
+import {List, ListItem} from 'material-ui/List';
 
 export default class QuestionList extends Component {
 
@@ -11,7 +13,7 @@ export default class QuestionList extends Component {
     }
 
     componentWillMount() {
-        ajax.get(config.dev_test_questions).end((error, response) => {
+        request.get(config.dev_test_questions).end((error, response) => {
             if (!error && response) {
                 this.setState({list: response.body});
             }
@@ -31,30 +33,19 @@ export default class QuestionList extends Component {
         return (
             <div>
                 <h4>Question List</h4>
-                {/* <ul className="collapsible popout" data-collapsible="accordion">
-                    {Object.keys(list).map((type, index) => (
-                        <li key={index}>
-                            {index == 0
-                                ? <div className="collapsible-header active">{type}</div>
-                                : <div className="collapsible-header">{type}</div>}
-                            <div className="collapsible-body">
-                                <ul>
-                                    {list[type].map((q, i) => (
-                                        <li key={i}>{q}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </li>
-                    ))}
-                </ul> */}
-                <Collapsible popout>
+                <Collapsible>
                     {Object.keys(list).map((type, index) => (
                         <CollapsibleItem header={type} key={type}>
-                            <ul>
-                                {list[type].map((q, i) => (
-                                    <li key={i}>{q}</li>
-                                ))}
-                            </ul>
+                            <List>
+                                {list[type].map((q, i) => {
+                                    const url = `/problems/${type}/${q}`.toLowerCase().replace(/\s/g, '_');
+                                    return (
+                                        <ListItem key={i}>
+                                            <Link to={url}>{q}</Link>
+                                        </ListItem>
+                                    );
+                                })}
+                            </List>
                         </CollapsibleItem>
                     ))}
                 </Collapsible>

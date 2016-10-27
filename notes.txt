@@ -6,3 +6,9 @@ npm start (preferred)
 
 Packing the Javascript/css files for production
 webpack -p
+
+
+External libraries used
+https://react-materialize.github.io/
+http://materializecss.com/
+http://www.material-ui.com/
