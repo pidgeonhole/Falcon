@@ -11,4 +11,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD gunicorn -b 0.0.0.0 --access-logfile - "CodeQuizApp.app:create_app()"
+CMD gunicorn -b 0.0.0.0 --access-logfile - "CodeQuiz.app:create_app()"

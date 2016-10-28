@@ -1,8 +1,10 @@
-from flask import Blueprint, jsonify, render_template, request
+from flask import Blueprint, jsonify, render_template, request, make_response
+from flask_cors import CORS
 
 from utils.funcs import get_icon
 
 testAPI = Blueprint('testAPI', __name__, template_folder='templates')
+CORS(testAPI)
 
 
 @testAPI.route('/test_questions/')
@@ -14,9 +16,13 @@ def list_of_questions():
     return jsonify(questions)
 
 
-@testAPI.route('/question', methods=["POST"])
+@testAPI.route('/question', methods=["POST", "GET"])
 def question():
-    return render_template('questions/question1.md')
+    md = render_template('questions/question1.md')
+    res = make_response(md)
+    res.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+    res.headers['Access-Control-Allow-Credentials'] = 'true'
+    return res
 
 
 @testAPI.route('/solution')

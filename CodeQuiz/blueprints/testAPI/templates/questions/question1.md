@@ -1,17 +1,24 @@
 ##### Question
 
-In ESD Land, the country has coins in 8 denominations. They are: 
-$1, $2, $5, $10, $20, $50, $100 and $200.
+Many countries has money in different denominations. For example, in Singapore, currencies come in
+10c, 20c, 50c, $1, $2, $5, $10, $50, $100, $1000 and $10000. 
 
-Your challenge is to find the number of ways to form **$x** using any number of coins
+Your challenge is to find the number of ways to form **$x** using any number of the given denominations.
 
 ##### Instructions
 
-You will be provided with an integer **x** >= 1 and you must print out the number of ways.
+For each test case, you will be provided with:
+ 1. an integer $x \geq 1$ which represents the currency target you are trying to achieve
+    - i.e. $x = 200$ means we are asking how many ways are there to make 200 units 
+ 2. A sequence of integers separated by commas representing the different denomiations
+    - i.e. 1, 5, 10, 20 means you must form 200 units with these denominations
+    
+Your task is to print the number of ways to achieve $x$.
 
 ```
 # Sample Input
 200
+1, 2, 5, 10, 20, 50, 100, 200
 # Your output
 73682
 ```

@@ -32,23 +32,23 @@ export default class QuestionList extends Component {
 
         return (
             <div>
-                <h4>Question List</h4>
-                <Collapsible>
-                    {Object.keys(list).map((type, index) => (
-                        <CollapsibleItem header={type} key={type}>
-                            <List>
-                                {list[type].map((q, i) => {
-                                    const url = `/problems/${type}/${q}`.toLowerCase().replace(/\s/g, '_');
-                                    return (
-                                        <ListItem key={i}>
-                                            <Link to={url}>{q}</Link>
-                                        </ListItem>
-                                    );
-                                })}
-                            </List>
-                        </CollapsibleItem>
-                    ))}
-                </Collapsible>
+              <h4>Question List</h4>
+              <Collapsible>
+                {Object.keys(list).map((type, index) => (
+                  <CollapsibleItem header={type} key={type}>
+                    <List>
+                      {list[type].map((q, i) => {
+                        const url = `/problems/${type}/${q}`.toLowerCase().replace(/\s/g, '_');
+                        return (
+                          <Link to={url} key={i}>
+                            <ListItem>{q}</ListItem>
+                          </Link>
+                        );
+                      })}
+                    </List>
+                  </CollapsibleItem>
+                ))}
+              </Collapsible>
             </div>
         );
     }

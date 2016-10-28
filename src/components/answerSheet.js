@@ -18,7 +18,8 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 
 // Render Markdown
-import Markdown from 'react-markdown';
+// import Markdown from 'react-markdown';
+import Markdown from './markdownRenderer';
 
 // Configs
 import config from '../config';
@@ -30,6 +31,7 @@ import 'codemirror/theme/icecoder.css';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/python/python';
 import 'codemirror/mode/r/r';
+
 
 
 export default class AnswerSheet extends Component {
@@ -73,18 +75,6 @@ export default class AnswerSheet extends Component {
         return word;
     }
 
-    renderContent() {
-        if (!this.state.markdown) {
-            return (<div className="progress">
-                <div className="indeterminate"></div>
-            </div>);
-        } else {
-            return (
-                <Markdown source={this.state.markdown} />
-            );
-        }
-    }
-
     render() {
         const title = this.namify(this.props.params.type);
         const subtitle = this.namify(this.props.params.name);
@@ -98,41 +88,43 @@ export default class AnswerSheet extends Component {
 
         return (
           <div>
-              <br/>
-              <MuiThemeProvider>
-                  <Card>
-                      <CardHeader title={title} subtitle={subtitle} avatar={
-                        <Avatar backgroundColor={cyan400} size={40}>P
-                        </Avatar>} />
-                      <CardText>
-                          { this.renderContent() }
-                      </CardText>
-                      <CardTitle title="Your Answer" />
-                      <CardText>
-                          <div style={{'border': '1px solid black'}}>
-                          <Codemirror ref="editor"
-                            value={this.state.code}
-                            onChange={this.updateCode.bind(this)}
-                            options={options} />
-                          </div>
-                          <div>
-                          <SelectField floatingLabelText="Language"
-                            value={supported_languages[this.state.index]}
-                            onChange={this.updateMode.bind(this)}>
-                              {supported_languages.map((e, i) => (
-                                  <MenuItem value={e} key={i} primaryText={e}/>
-                              ))}
-                          </SelectField>
-                          </div>
-                      </CardText>
-                      <CardActions>
-                          <RaisedButton label="Submit"
-                            secondary={true}
-                            style={{'margin': '12px'}}
-                            onClick={this.submit.bind(this)}/>
-                      </CardActions>
-                  </Card>
-              </MuiThemeProvider>
+            <br/>
+            <MuiThemeProvider>
+              <Card>
+                <CardHeader title={title} subtitle={subtitle} avatar={
+                  <Avatar backgroundColor={cyan400} size={40}>P
+                  </Avatar>} />
+                <CardText>
+                  <Markdown source={config.dev_test_q}
+                    name={this.props.params.name}
+                    type={this.props.params.type} />
+                </CardText>
+                <CardTitle title="Your Answer" />
+                <CardText>
+                  <div style={{'border': '1px solid black'}}>
+                    <Codemirror ref="editor"
+                      value={this.state.code}
+                      onChange={this.updateCode.bind(this)}
+                      options={options} />
+                  </div>
+                  <div>
+                    <SelectField floatingLabelText="Language"
+                      value={supported_languages[this.state.index]}
+                      onChange={this.updateMode.bind(this)}>
+                      {supported_languages.map((e, i) => (
+                        <MenuItem value={e} key={i} primaryText={e}/>
+                      ))}
+                    </SelectField>
+                  </div>
+                </CardText>
+                <CardActions>
+                  <RaisedButton label="Submit"
+                    secondary={true}
+                    style={{'margin': '12px'}}
+                    onClick={this.submit.bind(this)}/>
+                </CardActions>
+              </Card>
+            </MuiThemeProvider>
 		      </div>
         );
     }
