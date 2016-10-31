@@ -1,6 +1,5 @@
-from flask import Blueprint, render_template
-
-from config import settings
+from flask import Blueprint, render_template, current_app
+import os
 
 home = Blueprint('home', __name__, template_folder='templates')
 
@@ -9,7 +8,8 @@ payload = {
     'css'  : '/static/bundle.main.css',
     'title': 'ESD Codes'
 }
-if settings.DEBUG:
+
+if os.environ.get("TESTING"):
     payload['js'] = settings.WEBPACK_DEV_SERVER + '/bundle.main.js'
     payload['css'] = settings.WEBPACK_DEV_SERVER + '/bundle.main.css'
 

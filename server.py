@@ -1,11 +1,9 @@
 from CodeQuiz.app import create_app
 import cherrypy
-import os
 
 
 if __name__ == '__main__':
-    os.environ["LOCAL"] = "1"
-    app = create_app()
+    app = create_app("server")
 
     # Mount the application
     cherrypy.tree.graft(app, "/")
@@ -18,7 +16,7 @@ if __name__ == '__main__':
 
     # Configure the server object
     server.socket_host = "0.0.0.0"
-    server.socket_port = 5000
+    server.socket_port = 80
     server.thread_pool = 30
 
     # For SSL Support

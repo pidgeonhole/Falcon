@@ -26,3 +26,6 @@ pip-delete-this-directory.txt
 # Editor files
 .idea/
 *.DS_Store
+
+# Deploy files.
+deploy/

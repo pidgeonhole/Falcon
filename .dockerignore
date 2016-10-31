@@ -1,0 +1,12 @@
+deploy/
+.git/
+.idea/
+__pycache__/
+node_modules/
+src/
+
+package.json
+webpack.config.js
+notes.js
+local_test.py
+.babelrc
