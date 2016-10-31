@@ -20,6 +20,8 @@ def create_app(location="local", settings_override=None):
     elif location.lower() in {'server', 'production'}:
         app.config.from_object('production.settings')
         app.config.from_pyfile('settings.py', silent=True)
+    else:
+        raise ValueError("location argument not recognized")
 
     if settings_override:
         app.config.update(settings_override)
