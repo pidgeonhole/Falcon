@@ -4,8 +4,8 @@ import os
 home = Blueprint('home', __name__, template_folder='templates')
 
 payload = {
-    'js'   : '/static/bundle.main.js',
-    'css'  : '/static/bundle.main.css',
+    'js': '/static/bundle.main.js',
+    'css': '/static/bundle.main.css',
     'title': 'ESD Codes'
 }
 
