@@ -10,7 +10,8 @@ function getPlugins() {
   var plugins = [
     new webpack.NoErrorsPlugin(), // prevent bundling if there's erroneous codes,
     new ExtractTextPlugin(`${base}.[name].css`),
-    new webpack.ProvidePlugin({$: "jquery", jquery: "jquery"})
+    new webpack.ProvidePlugin({$: "jquery", jquery: "jquery"}),
+    new webpack.HotModuleReplacementPlugin()
   ];
 
   if (isProd) {
@@ -18,7 +19,7 @@ function getPlugins() {
     console.log(`Running ${process.env.NODE_ENV} mode`);
 
     plugins.push(new webpack.DefinePlugin({
-      NODE_ENV: "production"
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV)
     }));
 
     plugins.push(new webpack.optimize.UglifyJsPlugin());
@@ -30,22 +31,19 @@ function getPlugins() {
     plugins.push(new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(process.env.NODE_ENV || "staging")
     }));
-
-    plugins.push(new webpack.HotModuleReplacementPlugin());
-
   }
 
   return plugins;
 }
 
 function getDevServer() {
-  if (isProd)
+  if (isProd){
     return {};
-  else
-    return {
-        contentBase: './CodeQuiz/static',
-        hot: true
-    };
+  }
+  return {
+      contentBase: './CodeQuiz/static',
+      hot: true
+  };
 }
 
 function getEntries(){
@@ -61,7 +59,7 @@ function getEntries(){
 
 module.exports = {
     devServer: getDevServer(),
-    entry: getEntries,
+    entry: getEntries(),
     output: {
         path: './CodeQuiz/static',
         filename: `${base}.[name].js`, // where my bundle is stored
