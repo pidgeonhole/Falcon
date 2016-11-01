@@ -8,4 +8,4 @@ COPY . .
 
 EXPOSE 80
 
-CMD python server.app
+CMD python server.py
