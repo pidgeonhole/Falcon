@@ -1,12 +1,13 @@
-if (process.env.NODE_ENV === "production") {
-  let url = endpoint => `http://128.199.120.230/test/${endpoint}`;
-} else if (process.env.NODE_ENV === "staging") {
-  let url = endpoint => `http://localhost:5000/test/${endpoint}`;
-} else {
-  throw `process.env.NODE_ENV (${process.env.NODE_ENV}) variable unrecognized.`;
+function url(endpoint){
+  switch (process.env.NODE_ENV) {
+    case "production":
+      return `http://128.199.120.230/test/${endpoint}`;
+    case "staging":
+      return `http://localhost:5000/test/${endpoint}`;
+    default:
+      throw `process.env.NODE_ENV (${process.env.NODE_ENV}) variable unrecognized.`;
+  }
 }
-
-console.log(process.env.NODE_ENV);
 
 const configs = {
   dev_test_questions: url('test_questions'),
