@@ -4,6 +4,7 @@ const webpack_dev_server = require('webpack-dev-server');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const base = "bundle";
+const isProd = process.env.NODE_ENV === 'production';
 
 function getPlugins() {
   var plugins = [
@@ -12,7 +13,7 @@ function getPlugins() {
     new webpack.ProvidePlugin({$: "jquery", jquery: "jquery"})
   ];
 
-  if (process.env.NODE_ENV === 'production') {
+  if (isProd) {
     // production
     console.log(`Running ${process.env.NODE_ENV} mode`);
 
@@ -37,16 +38,30 @@ function getPlugins() {
   return plugins;
 }
 
-module.exports = {
-    devServer: {
+function getDevServer() {
+  if (isProd)
+    return {};
+  else
+    return {
         contentBase: './CodeQuiz/static',
         hot: true
-    },
-    entry: [
-        'webpack-dev-server/client?http://localhost:8081', //client portion of dev server
-        'webpack/hot/only-dev-server', // hot loading
-        './src/index.js' // Entry path for bundling process
-    ],
+    };
+}
+
+function getEntries(){
+  entries = [
+    './src/index.js' // Entry path for bundling process
+  ];
+  if (!isProd) {
+    entries.push('webpack-dev-server/client?http://localhost:8081'); //client portion of dev server
+    entries.push('webpack/hot/only-dev-server'); // hot loading
+  }
+  return entries;
+}
+
+module.exports = {
+    devServer: getDevServer(),
+    entry: getEntries,
     output: {
         path: './CodeQuiz/static',
         filename: `${base}.[name].js`, // where my bundle is stored
