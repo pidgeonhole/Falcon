@@ -1,7 +1,9 @@
-if (process.env.NODE_ENV == "production") {
-  const url = endpoint => `http://128.199.120.230/test/${endpoint}`;
+if (process.env.NODE_ENV === "production") {
+  let url = endpoint => `http://128.199.120.230/test/${endpoint}`;
+} else if (process.env.NODE_ENV === "staging") {
+  let url = endpoint => `http://localhost:5000/test/${endpoint}`;
 } else {
-  const url = endpoint => `http://localhost:5000/test/${endpoint}`;
+  throw `process.env.NODE_ENV (${process.env.NODE_ENV}) variable unrecognized.`;
 }
 
 console.log(process.env.NODE_ENV);
