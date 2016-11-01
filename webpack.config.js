@@ -19,7 +19,9 @@ function getPlugins() {
     console.log(`Running ${process.env.NODE_ENV} mode`);
 
     plugins.push(new webpack.DefinePlugin({
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      "process.env": {
+        "NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+      }
     }));
 
     plugins.push(new webpack.optimize.UglifyJsPlugin());
@@ -29,7 +31,9 @@ function getPlugins() {
     console.log("Running development mode");
 
     plugins.push(new webpack.DefinePlugin({
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV || "staging")
+      "process.env": {
+        "NODE_ENV": JSON.stringify(process.env.NODE_ENV || "staging")
+      }
     }));
   }
 
@@ -108,15 +112,3 @@ module.exports = {
         ]
     }
 }
-
-/*
-plugins: [
-    new webpack.HotModuleReplacementPlugin(), // for hot reloading
-    new webpack.NoErrorsPlugin(), // prevent bundling if there's erroneous codes,
-    new ExtractTextPlugin(`${base}.[name].css`),
-    new webpack.ProvidePlugin({$: "jquery", jquery: "jquery"}),
-    new webpack.DefinePlugin({
-      ENV_: "staging"
-    })
-]
-*/
