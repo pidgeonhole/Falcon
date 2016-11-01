@@ -44,7 +44,6 @@ class Markdown extends Component {
       }
 
       let text = this.state.m.render(this.state.markdown);
-      console.log(text);
 
       return (
           <Highlight innerHTML={true}>

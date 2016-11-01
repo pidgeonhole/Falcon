@@ -13,7 +13,7 @@ export default class QuestionList extends Component {
     }
 
     componentWillMount() {
-        request.get(config.dev_test_questions).end((error, response) => {
+        request.get(config.all_questions).end((error, response) => {
             if (!error && response) {
                 this.setState({list: response.body});
             }

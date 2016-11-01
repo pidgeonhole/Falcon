@@ -59,7 +59,7 @@ export default class AnswerSheet extends Component {
         }
 
         request
-            .post(config.dev_test_q)
+            .post(config.question)
             .send(JSON.stringify(body))
             .then((res) => {
                 this.setState({markdown: res.text});
@@ -95,7 +95,7 @@ export default class AnswerSheet extends Component {
                   <Avatar backgroundColor={cyan400} size={40}>P
                   </Avatar>} />
                 <CardText>
-                  <Markdown source={config.dev_test_q}
+                  <Markdown source={config.question}
                     name={this.props.params.name}
                     type={this.props.params.type} />
                 </CardText>
@@ -137,7 +137,7 @@ export default class AnswerSheet extends Component {
           mode: mode
         });
 
-        request.post(config.dev_test_submit)
+        request.post(config.submit)
           .send(data)
           .then(res => {
               console.log(res);

@@ -10,11 +10,11 @@ function url(endpoint){
 }
 
 const configs = {
-  dev_test_questions: url('test_questions'),
-  dev_test_q: url('question'),
-  dev_test_s: url('solution'),
-  dev_test_html: url('somehtml'),
-  dev_test_submit: url('submit')
+  all_questions: url('test_questions'),
+  question: url('question'),
+  solution: url('solution'),
+  html: url('somehtml'),
+  submit: url('submit')
 };
 
 export default configs;
