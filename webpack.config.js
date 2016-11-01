@@ -5,6 +5,38 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const base = "bundle";
 
+function getPlugins() {
+  var plugins = [
+    new webpack.NoErrorsPlugin(), // prevent bundling if there's erroneous codes,
+    new ExtractTextPlugin(`${base}.[name].css`),
+    new webpack.ProvidePlugin({$: "jquery", jquery: "jquery"})
+  ];
+
+  if (process.env.NODE_ENV === 'production') {
+    // production
+    console.log(`Running ${process.env.NODE_ENV} mode`);
+
+    plugins.push(new webpack.DefinePlugin({
+      NODE_ENV: "production"
+    }));
+
+    plugins.push(new webpack.optimize.UglifyJsPlugin());
+
+  } else {
+    // development
+    console.log("Running development mode");
+
+    plugins.push(new webpack.DefinePlugin({
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV || "staging")
+    }));
+
+    plugins.push(new webpack.HotModuleReplacementPlugin());
+
+  }
+
+  return plugins;
+}
+
 module.exports = {
     devServer: {
         contentBase: './CodeQuiz/static',
@@ -20,12 +52,7 @@ module.exports = {
         filename: `${base}.[name].js`, // where my bundle is stored
         publicPath: '/'
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(), // for hot reloading
-        new webpack.NoErrorsPlugin(), // prevent bundling if there's erroneous codes,
-        new ExtractTextPlugin(`${base}.[name].css`),
-        new webpack.ProvidePlugin({$: "jquery", jquery: "jquery"})
-    ],
+    plugins: getPlugins(),
     resolve: {
         extensions: ['', '.js']
     },
@@ -68,3 +95,15 @@ module.exports = {
         ]
     }
 }
+
+/*
+plugins: [
+    new webpack.HotModuleReplacementPlugin(), // for hot reloading
+    new webpack.NoErrorsPlugin(), // prevent bundling if there's erroneous codes,
+    new ExtractTextPlugin(`${base}.[name].css`),
+    new webpack.ProvidePlugin({$: "jquery", jquery: "jquery"}),
+    new webpack.DefinePlugin({
+      ENV_: "staging"
+    })
+]
+*/

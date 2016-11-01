@@ -1,4 +1,8 @@
-const url = endpoint => `http://localhost:5000/test/${endpoint}`;
+if (process.env.NODE_ENV == "production") {
+  const url = endpoint => `http://128.199.120.230/test/${endpoint}`;
+} else {
+  const url = endpoint => `http://localhost:5000/test/${endpoint}`;
+}
 
 const configs = {
   dev_test_questions: url('test_questions'),
