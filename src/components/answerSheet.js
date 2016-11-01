@@ -40,7 +40,7 @@ export default class AnswerSheet extends Component {
         super(props);
         this.state = {
             markdown: null,
-            code: 'print("Hello World")',
+            code: 'print("Hello World!")',
             mode: 'python',
             index: 0
         };

@@ -33,7 +33,7 @@ class Markdown extends Component {
               markdown: res.text
             });
         },
-        err => console.log(err));
+        err => console.error(err));
     }
 
     render() {
