@@ -1,20 +1,27 @@
 #!/usr/bin/env bash
 
-COMMENT=""
-
 
 function run_application () {
+  local COMMENT=""
+  local ENV="production"
+
   while [[ ${#COMMENT} -lt 1 ]]; do
     echo -n "Comment for git commit: "
     read COMMENT
   done
 
+  echo -n "Environment (${ENV}): "
+  read TEMP
+  if (( ${#TEMP} > 0)); then
+    ENV=${TEMP}
+  fi
+
   echo "Preparing static files with Webpack. This may take a while.."
   NODE_ENV=production webpack -p
   echo "Committing to git"
   git commit -am "${COMMENT}"
-  echo "Pushing to production"
-  git push production master
+  echo "Pushing to ${ENV}"
+  git push ${ENV} master
   echo "Done!"
 }
 
