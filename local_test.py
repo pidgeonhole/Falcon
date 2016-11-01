@@ -6,6 +6,8 @@ import os
 if __name__ == '__main__':
     os.environ["LOCAL"] = "1"
     app = create_app()
+    print(app.static_folder)
+    exit(1)
 
     # Mount the application
     cherrypy.tree.graft(app, "/")
