@@ -1,0 +1,28 @@
+#!/bin/bash
+
+unset GIT_INDEX_FILE
+
+REPO_NAME="CodeQuiz"
+REPO_NAME_LOWER="codequiz"
+APP_NAME="app"
+
+# Check out the newest version of the code.
+GIT_WORK_TREE="/var/www/${REPO_NAME}"
+
+# Force checkout. Throw away local changes.
+git --work-tree=${GIT_WORK_TREE} --git-dir=${GIT_WORK_TREE}.git checkout -f
+
+TAG="$(git log --pretty=format:'%h' -n 1)"
+TAG="${REPO_NAME_LOWER}:latest"
+
+# Build the image with the proper commit tag.
+docker stop ${APP_NAME}
+docker rm ${APP_NAME}
+docker build -t ${TAG} ${GIT_WORK_TREE}
+docker run -d --name ${APP_NAME} -p 80:5000 ${TAG}
+
+# echo "Restarting ${REPO_NAME}"
+# docker stop "${APP_NAME}"
+
+echo "Removing untagged Docker images (may take a while)"
+docker rmi -f $(docker images --quiet --filter dangling=true)
