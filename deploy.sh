@@ -13,6 +13,8 @@ function run_application () {
   NODE_ENV=production webpack -p
   echo "Committing to git"
   git commit -am "${COMMENT}"
+  echo "Pushing to production"
+  git push production master
   echo "Done!"
 }
 
