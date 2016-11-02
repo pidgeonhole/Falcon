@@ -28,7 +28,7 @@ pip-delete-this-directory.txt
 *.DS_Store
 
 # Deploy files.
-deploy/*template*
+_deploy/*template*
 
 # Secret Files
 *SECRET*.ENV
