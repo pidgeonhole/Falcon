@@ -6,7 +6,7 @@ if __name__ == '__main__':
     app = create_app("server")
 
     # Mount the application
-    cherrypy.tree.graft(app, "/")
+    # cherrypy.tree.graft(app, "/")
 
     # cherrypy.config.update({
     #     'server.socket_host'         : "0.0.0.0",
@@ -32,6 +32,9 @@ if __name__ == '__main__':
     # cherrypy.engine.start()
     # cherrypy.engine.block()
 
+    # Mount the application
+    cherrypy.tree.graft(app, "/")
+
     # Unsubscribe the default server
     cherrypy.server.unsubscribe()
 
@@ -53,5 +56,6 @@ if __name__ == '__main__':
     server.subscribe()
 
     # Start the server engine (Option 1 *and* 2)
+
     cherrypy.engine.start()
     cherrypy.engine.block()
