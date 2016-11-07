@@ -34,9 +34,6 @@ function get_requirements () {
   echo "Done!"
 }
 
-
-exit
-
 DEVOPS_FOLDER="./_deploy"
 
 function run_application () {
