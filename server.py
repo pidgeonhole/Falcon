@@ -22,12 +22,12 @@ if __name__ == '__main__':
     # })
 
     # Mount Static Directories
-    cherrypy.tree.mount(None, '/static', config={
-        '/static': {
-            'tools.staticdir.on' : True,
-            'tools.staticdir.dir': app.static_folder
-        }
-    })
+    # cherrypy.tree.mount(None, '/static', config={
+    #     '/static': {
+    #         'tools.staticdir.on' : True,
+    #         'tools.staticdir.dir': app.static_folder
+    #     }
+    # })
 
     # cherrypy.engine.start()
     # cherrypy.engine.block()
