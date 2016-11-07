@@ -10,14 +10,19 @@ function url(endpoint){
 }
 
 function problem(id) {
-  // returns url for problem given category and question identifier
+  // returns url for problem given question identifier
   return `${url('problems')}/${id}`;
+}
+
+function submit(id) {
+  // returns url for problem submission
+  return `${url('submissions')}/${id}`;
 }
 
 const config = {
   categories: url('categories'),
   problem: problem,
-  submit: url('submit')
+  submit: submit
 };
 
 export default config;

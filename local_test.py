@@ -5,8 +5,9 @@ import cherrypy
 from CodeQuiz.app import create_app
 
 if __name__ == '__main__':
-    os.environ["LOCAL"] = "0"
+    os.environ["LOCAL"] = "1"
     app = create_app()
+    app.run()
 
     # Mount the application
     cherrypy.tree.graft(app, "/")

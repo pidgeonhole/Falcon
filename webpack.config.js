@@ -4,20 +4,27 @@ const webpack_dev_server = require('webpack-dev-server');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const base = "bundle";
+const NODE_ENV = process.env.NODE_ENV || 'staging';
 const isProd = process.env.NODE_ENV === 'production';
+const IP = process.env.IP || "http://139.59.241.214:3000/v1/";
+
+console.log(NODE_ENV, IP, isProd)
 
 function getPlugins() {
+
+  var env_var = {
+    "process.env": {
+      "NODE_ENV": JSON.stringify(NODE_ENV),
+      "IP": JSON.stringify(IP)
+    }
+  };
+
   var plugins = [
     new webpack.NoErrorsPlugin(), // prevent bundling if there's erroneous codes,
     new ExtractTextPlugin(`${base}.[name].css`),
     new webpack.ProvidePlugin({$: "jquery", jquery: "jquery"}),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      "process.env": {
-        "NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-        "IP": JSON.stringify(process.env.IP)
-      }
-    })
+    new webpack.DefinePlugin(env_var)
   ];
 
   if (isProd) {
