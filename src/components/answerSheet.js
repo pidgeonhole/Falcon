@@ -55,8 +55,7 @@ export default class AnswerSheet extends Component {
     componentWillMount() {
         request.get(config.problem(this.props.params.id))
             .then(res => {
-              let body = JSON.parse(res.body);
-              let text = decodeURIComponent(body.description);
+              let text = decodeURIComponent(res.body.description);
                 this.setState({markdown: text});
               }, err => {
                 console.error("Couldn't get html");
@@ -64,7 +63,7 @@ export default class AnswerSheet extends Component {
     }
 
     namify(word) {
-        word = word.replace(/\_/g, ' '); // replace underscores with spaces
+        word = word.replace(/\-/g, ' '); // replace underscores with spaces
         // Title Case the whole word
         word = word.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.substr(1).toLowerCase());
         return word;

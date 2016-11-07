@@ -13,9 +13,10 @@ export default class QuestionList extends Component {
     }
 
     componentWillMount() {
-        request.get(config.categories + '/?expand=problems').end((error, response) => {
+        const url = `${config.categories}/?expand=problems`;
+        request.get(url).end((error, response) => {
             if (!error && response) {
-                this.setState({list: JSON.parse(response.body)});
+                this.setState({list: response.body});
             }
         });
     }
@@ -33,12 +34,12 @@ export default class QuestionList extends Component {
         return (
             <div>
               <h4>Question List</h4>
-              <Collapsible popout>
+              <Collapsible>
                 {list.map(e => (
                   <CollapsibleItem header={e.name} key={e.id}>
                     <List>
                       {e.problems.map(p => {
-                        const url = `/problems/${e.name}/${p.title}/${p.id}`.replace(/\s/g, '');
+                        const url = `/problems/${e.name}/${p.title}/${p.id}`.replace(/\s/g, '-');
                         return (
                           <Link to={url} key={p.id}>
                             <ListItem>{p.title}</ListItem>

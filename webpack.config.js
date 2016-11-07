@@ -11,32 +11,24 @@ function getPlugins() {
     new webpack.NoErrorsPlugin(), // prevent bundling if there's erroneous codes,
     new ExtractTextPlugin(`${base}.[name].css`),
     new webpack.ProvidePlugin({$: "jquery", jquery: "jquery"}),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      "process.env": {
+        "NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+        "IP": JSON.stringify(process.env.IP)
+      }
+    })
   ];
 
   if (isProd) {
     // production
     console.log(`Running ${process.env.NODE_ENV} mode`);
-
-    plugins.push(new webpack.DefinePlugin({
-      "process.env": {
-        "NODE_ENV": JSON.stringify(process.env.NODE_ENV)
-      }
-    }));
-
     plugins.push(new webpack.optimize.UglifyJsPlugin());
 
   } else {
     // development
     console.log("Running development mode");
-
-    plugins.push(new webpack.DefinePlugin({
-      "process.env": {
-        "NODE_ENV": JSON.stringify(process.env.NODE_ENV || "staging")
-      }
-    }));
   }
-
   return plugins;
 }
 

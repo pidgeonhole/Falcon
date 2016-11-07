@@ -1,9 +1,9 @@
 function url(endpoint){
   switch (process.env.NODE_ENV) {
     case "production":
-      return `http://128.199.120.230/v1/${endpoint}`;
+      return `${process.env.IP}${endpoint}`;
     case "staging":
-      return `http://139.59.241.214:3000/v1/${endpoint}`;
+      return `${process.env.IP}${endpoint}`;
     default:
       throw `process.env.NODE_ENV (${process.env.NODE_ENV}) variable unrecognized.`;
   }
@@ -14,10 +14,10 @@ function problem(id) {
   return `${url('problems')}/${id}`;
 }
 
-const configs = {
+const config = {
   categories: url('categories'),
   problem: problem,
   submit: url('submit')
 };
 
-export default configs;
+export default config;

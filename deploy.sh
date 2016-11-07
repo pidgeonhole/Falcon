@@ -39,6 +39,7 @@ DEVOPS_FOLDER="./_deploy"
 function run_application () {
   local COMMENT=""
   local ENV="production"
+  local IP="http://139.59.241.214:3000/v1/"
 
   while [[ ${#COMMENT} -lt 1 ]]; do
     echo -n "Comment for git commit: "
@@ -52,8 +53,14 @@ function run_application () {
   fi
   echo "Working on ${ENV}"
 
+  echo -n "Jiayu's API IP (${IP}): "
+  read TEMP
+  if (( ${#TEMP} > 0)); then
+    IP=${TEMP}
+  fi
+
   echo "Preparing static files with Webpack. This may take a while.."
-  NODE_ENV=production webpack -p
+  NODE_ENV=production IP="${IP}" webpack
   echo "Committing to git"
   git commit -am "${COMMENT}"
   echo "Pushing to ${ENV}"
