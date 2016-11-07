@@ -13,9 +13,9 @@ export default class QuestionList extends Component {
     }
 
     componentWillMount() {
-        request.get(config.all_questions).end((error, response) => {
+        request.get(config.categories + '/?expand=problems').end((error, response) => {
             if (!error && response) {
-                this.setState({list: response.body});
+                this.setState({list: JSON.parse(response.body)});
             }
         });
     }
@@ -33,23 +33,23 @@ export default class QuestionList extends Component {
         return (
             <div>
               <h4>Question List</h4>
-              <Collapsible>
-                {Object.keys(list).map((type, index) => (
-                  <CollapsibleItem header={type} key={type}>
+              <Collapsible popout>
+                {list.map(e => (
+                  <CollapsibleItem header={e.name} key={e.id}>
                     <List>
-                      {list[type].map((q, i) => {
-                        const url = `/problems/${type}/${q}`.toLowerCase().replace(/\s/g, '_');
+                      {e.problems.map(p => {
+                        const url = `/problems/${e.name}/${p.title}/${p.id}`.replace(/\s/g, '');
                         return (
-                          <Link to={url} key={i}>
-                            <ListItem>{q}</ListItem>
+                          <Link to={url} key={p.id}>
+                            <ListItem>{p.title}</ListItem>
                           </Link>
-                        );
+                        )
                       })}
                     </List>
                   </CollapsibleItem>
                 ))}
               </Collapsible>
             </div>
-        );
+          );
     }
 }

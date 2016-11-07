@@ -22,3 +22,7 @@ Your task is to print the number of ways to achieve $x$.
 # Your output
 73682
 ```
+
+```python 
+print("hellow Wolrd")
+```

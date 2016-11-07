@@ -13,6 +13,6 @@ import "./stylesheets/main.css";
 
 ReactDOM.render(
     <Router history={browserHistory}>
-    <Route path='/' component={Home}/>
-    <Route path='/problems/:type/:name' component={AnswerSheet}/>
-</Router>, document.getElementById('app'));
+      <Route path='/' component={Home}/>
+      <Route path='/problems/:type/:name/:id' component={AnswerSheet}/>
+    </Router>, document.getElementById('app'));

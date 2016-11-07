@@ -120,7 +120,7 @@ EXAMPLES:
 EOF
 }
 
-if (( ${#} == 0)); then
+if (( ${#} == 0 )); then
   setup
   exit
 fi

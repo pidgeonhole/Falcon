@@ -12,7 +12,7 @@ import {
     CardText
 } from 'material-ui/Card';
 import LinearProgress from 'material-ui/LinearProgress';
-import {cyan400} from 'material-ui/styles/colors';
+import {cyan400, deepPurple600} from 'material-ui/styles/colors';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -53,16 +53,11 @@ export default class AnswerSheet extends Component {
     }
 
     componentWillMount() {
-        const body = {
-            type: this.props.params.type,
-            name: this.props.params.name
-        }
-
-        request
-            .post(config.question)
-            .send(JSON.stringify(body))
-            .then((res) => {
-                this.setState({markdown: res.text});
+        request.get(config.problem(this.props.params.id))
+            .then(res => {
+              let body = JSON.parse(res.body);
+              let text = decodeURIComponent(body.description);
+                this.setState({markdown: text});
               }, err => {
                 console.error("Couldn't get html");
             });
@@ -86,6 +81,9 @@ export default class AnswerSheet extends Component {
         		};
         const supported_languages = ['Python', 'R', 'Javascript'];
 
+        let core = (<LinearProgress mode="indeterminate" color={deepPurple600}/>);
+        if(this.state.markdown) core = (<Markdown markdown={this.state.markdown}/>);
+
         return (
           <div>
             <br/>
@@ -95,9 +93,7 @@ export default class AnswerSheet extends Component {
                   <Avatar backgroundColor={cyan400} size={40}>P
                   </Avatar>} />
                 <CardText>
-                  <Markdown source={config.question}
-                    name={this.props.params.name}
-                    type={this.props.params.type} />
+                  {core}
                 </CardText>
                 <CardTitle title="Your Answer" />
                 <CardText>

@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import request from 'superagent';
 
-import {deepPurple600} from 'material-ui/styles/colors';
-import LinearProgress from 'material-ui/LinearProgress';
-
 import md from 'markdown-it';
 import katex from 'markdown-it-katex';
 import Highlight from 'react-highlight';
@@ -15,19 +12,17 @@ class Markdown extends Component {
 
       let m = md();
       m.use(katex);
-      this.state = {m};
+      this.state = {
+        m: m,
+        markdown: this.props.markdown
+      };
     }
 
     componentWillMount() {
-
       const src = this.props.source;
-      const body = JSON.stringify({
-        type: this.props.type,
-        name: this.props.name
-      });
+      if (!src || this.props.markdown) return;
 
-      request.post(src)
-        .send(body)
+      request.get(src)
         .then((res) => {
             this.setState({
               markdown: res.text
@@ -37,14 +32,7 @@ class Markdown extends Component {
     }
 
     render() {
-      if (!this.state.markdown) {
-          return (
-              <LinearProgress mode="indeterminate" color={deepPurple600}/>
-          );
-      }
-
       let text = this.state.m.render(this.state.markdown);
-
       return (
           <Highlight innerHTML={true}>
             {text}
