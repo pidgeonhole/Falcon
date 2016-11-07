@@ -50,6 +50,7 @@ function run_application () {
   if (( ${#TEMP} > 0)); then
     ENV=${TEMP}
   fi
+  echo "Working on ${ENV}"
 
   echo "Preparing static files with Webpack. This may take a while.."
   NODE_ENV=production webpack -p

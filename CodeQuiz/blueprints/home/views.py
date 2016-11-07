@@ -9,7 +9,7 @@ payload = {
     'title': 'ESD Codes'
 }
 
-if os.environ.get("LOCAL"):
+if os.environ.get("LOCAL") == '1':
     from config import settings
     payload['js'] = settings.WEBPACK_DEV_SERVER + '/bundle.main.js'
     payload['css'] = settings.WEBPACK_DEV_SERVER + '/bundle.main.css'
