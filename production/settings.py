@@ -1,5 +1,7 @@
-DEBUG = False
+def __get_secret(key):
+    import os
+    return os.environ[key]
 
-with open('SECRET_KEY.ENV', 'r') as f:
-    SECRET_KEY = f.read()
+DEBUG = False
+SECRET_KEY = __get_secret("SECRET_KEY")
 
