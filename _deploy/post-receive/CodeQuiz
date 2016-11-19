@@ -21,8 +21,5 @@ docker rm ${APP_NAME}
 docker build -t ${TAG} ${GIT_WORK_TREE}
 docker run -d --name ${APP_NAME} -p 80:5000 ${TAG}
 
-# echo "Restarting ${REPO_NAME}"
-# docker stop "${APP_NAME}"
-
 echo "Removing untagged Docker images (may take a while)"
 docker rmi -f $(docker images --quiet --filter dangling=true)
