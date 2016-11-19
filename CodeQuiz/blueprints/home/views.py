@@ -21,7 +21,6 @@ if os.environ.get("LOCAL") == '1':
 def catchall(path):
     return render_template("page/index.html", **payload)
 
-
 @home.route('/')
 def index():
     return render_template('page/index.html', **payload)

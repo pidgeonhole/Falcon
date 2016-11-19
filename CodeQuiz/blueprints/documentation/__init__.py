@@ -1,0 +1,1 @@
+from CodeQuiz.blueprints.documentation.views import docs
