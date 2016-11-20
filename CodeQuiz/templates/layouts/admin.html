@@ -13,26 +13,47 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 
-    <!-- Materialize CSS for gridding mainly-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <!-- For Top level style sheets, less priority -->
+    {% block styleTop %} {% endblock %}
 
-    <!-- Katex -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css"/>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendors/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendors/mdc.min.css') }}">
 
     <!-- Custom CSS -->
-    <!--<link rel="stylesheet" href="{{ css }}">-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/helper.css') }}">
 
+    <!-- For Bottom level style sheets more priority -->
+    {% block styleBottonm %} {% endblock %}
 </head>
 
 <body>
+<header class="navbar navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('admin.index') }}">Admin Pages</a>
+        <ul class="nav navbar-nav">
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="admin-nav-dropdown"
+                   aria-haspopup="true" aria-expanded="false">Navigation</a>
+                <div class="dropdown-menu" aria-labelledby="admin-nav-dropdown">
+                    <a href="{{ url_for('admin.questions') }}" class="dropdown-item">Set Questions</a>
+                    <a href="#" class="dropdown-item">Edit Questions</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</header>
+<div class="container-fluid mdc-bg-indigo-800 mdc-text-grey-100">
+    {% block header %} {% endblock %}
+</div>
 {% block main %} {% endblock %}
 
+{% block modals %} {% endblock %}
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-<!-- Bundle file. Must be placed at bottom of page -->
+<script type="text/javascript" src="{{ url_for('static', filename='vendors/jquery-3.1.1.min.js') }}"></script>
 {% block scripts %} {% endblock %}
+<script type="text/javascript" src="{{ url_for('static', filename='vendors/tether.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='vendors/bootstrap.min.js') }}"></script>
 
 </body>
 
