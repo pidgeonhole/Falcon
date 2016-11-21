@@ -6,7 +6,7 @@ Guidelines
 After loading file `static/vendor/mdc.min.css`, change color of background by adding `mdc-bg-*color*-*code*` 
 and change color of text by adding `mdc-text-*color*-*code*`. 
 
-Check the color table at http://zavoloklom.github.io/material-design-color-palette/colors.html#indigo for more information.
+Check the color table at http://zavoloklom.github.io/material-design-color-palette/colors.html for more information.
 
 ### Local Testing
 Local Test
