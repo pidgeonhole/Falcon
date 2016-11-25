@@ -1,0 +1,114 @@
+{% extends 'layouts/common.html' %}
+<!-- -->
+{% block css %}
+<link rel="stylesheet" href="/static/vendors/prism/prism.css"> {% endblock %}
+<!-- -->
+{% block main %}
+<div class="container">
+    <div class="section">
+        <h5>Basic usage</h5>
+        <section>
+            After selecting the language you are working with, you can start typing away in the editor. Otherwise, you can simply copy
+            and paste your code from your favourite IDE and submit it.
+            <br><br> The number of test cases and the inputs for the test cases will be read from the standard input. After
+            cleaning the standard input, the answer you give must then be printed to the standard output. Don't worry if
+            you don't understand what we're saying now. We'll go through some examples in this document.
+        </section>
+    </div>
+    <div class="divider"></div>
+    <div class="section">
+        <h5>Simple Example: Summation</h5>
+        <section>
+            Assume we have the following problem where we are given some list of numbers and the question is: "What is their sum?" <br>            The input file could look like the following
+            <pre>
+                <code class="language-markdown">
+                    3             # number of test cases
+                    1 2 3 4 5 6   # input 1
+                    2 3 4 5 6     # input 2
+                    6 5 -1 2 2    # input 3
+                </code>
+            </pre>
+            <br> Ideally, your answer (output) should be printed like so
+            <pre>
+                <code class="language-markdown">
+                    Case #1: 21
+                    Case #2: 20
+                    Case #3: 14
+                </code>
+            </pre>
+        </section>
+    </div>
+    <div class="divider"></div>
+    <div class="section">
+        <h5>Reading and writing to standard input/output</h5>
+        <section>
+            We'll use the example "summation" question above in this tutorial. Here's how to solve it.
+            <div>
+                <div>
+                    <ul class="tabs tabs-fixed-width">
+                        <li class="tab"><a href="#python" class="text-base-color">Python</a></li>
+                        <li class="tab"><a href="#r" class="text-base-color">R</a></li>
+                    </ul>
+                </div>
+                <div id="python" class="col-s12">
+                    <pre>
+                        <code class="language-python">
+                            N = int(input()) # Read from standard input with input() and convert to integer
+                            
+                            for i in range(N):
+                                string = input()  # Now I've read in the numbers, i.e. 1 2 3 4 5 6 but it's a string
+                                nums = [int(j) for j in string.split()]   # converts string to list of integers
+                                answer = sum(nums)  # Get answer
+
+                                # Format message properly
+                                message = "Case #{case_no}: {ans}".format(case_no = i + 1, ans = answer)
+                                
+                                print(message)  # print your final answer to standard output
+                        </code>
+                    </pre>
+                </div>
+                <div id="r">
+                    <pre>
+                        <code class="language-r">
+                            f = file("stdin")
+                            lines = readLines(f)  # Read all lines from standard input
+
+                            N = as.numeric(lines[1])  # First input is number of test cases
+                            test.cases = lines[-1]        # Subsequent inputs 
+
+                            for (i in seq(N)){
+                                # Split each sequence by spaces 
+                                list.of.char = strsplit(test.cases[i], '\\s+')[[1]]
+                                
+                                # Change from char vector to numeric vector
+                                list.of.num = as.numeric(list.of.char)
+                                
+                                # Prepare answer
+                                answer = sum(list_of_num)
+                                message = sprintf("Case #%d: %d", i, answer)
+                                
+                                # Print answer to standard output
+                                write(message, stdout())
+                            }
+                        </code>
+                    </pre>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="divider"></div>
+    <div class="section">
+        <h5>Conclusion</h5>
+        <section>
+            That's all there is. Hoping playing! <br> 
+            <i class="material-icons">sentiment_very_satisfied</i>
+        </section>
+    </div>
+
+</div>
+{% endblock %}
+<!-- -->
+{% block scripts %}
+<script src="/static/vendors/prism/prism.js"></script>
+<!---->
+{% endblock %}

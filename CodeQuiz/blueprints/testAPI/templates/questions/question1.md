@@ -16,6 +16,8 @@ For each test case, you will be provided with:
 Your task is to print the number of ways to achieve $x$.
 
 ```
+Number of test cases
+1
 # Sample Input
 200
 1, 2, 5, 10, 20, 50, 100, 200
@@ -23,6 +25,18 @@ Your task is to print the number of ways to achieve $x$.
 73682
 ```
 
+How you should output
 ```python 
-print("hellow Wolrd")
+number_of_test_cases = int(input())
+
+for case_no in range(number_of_test_cases):
+    target_number = int(input())
+    strings_coins = input()   # output = "1,2,3,4,5,6"
+    # coins is now a string, so to make it a list do the following
+    coins = eval(coin)  # output = (1,2,3,4,5,6)
+    
+    # ... your function here 
+    result = "Integer value of your result
+    
+    print("Case #{case_number}: {answer}".format(case_number=case_no, answer=result))
 ```

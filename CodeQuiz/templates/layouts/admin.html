@@ -21,10 +21,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='vendors/mdc.min.css') }}">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/helper.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
 
     <!-- For Bottom level style sheets more priority -->
     {% block styleBottonm %} {% endblock %}
+
+    <!-- Vuejs -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex"></script>
 </head>
 
 <body>
@@ -47,13 +51,18 @@
     {% block header %} {% endblock %}
 </div>
 {% block main %} {% endblock %}
-
+<div id="ex1">
+    <button v-on:click="speak('message')">Test [[counter]]</button>
+</div>
 {% block modals %} {% endblock %}
 
-<script type="text/javascript" src="{{ url_for('static', filename='vendors/jquery-3.1.1.min.js') }}"></script>
-{% block scripts %} {% endblock %}
-<script type="text/javascript" src="{{ url_for('static', filename='vendors/tether.min.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='vendors/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/tether.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vue/widgets.js') }}"></script>
+
+{% block scripts %}
+{% endblock %}
 
 </body>
 

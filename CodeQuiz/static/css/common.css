@@ -1,0 +1,57 @@
+.brand-logo-center {
+    font-size: 3em;
+    font-style: bold;
+    width: 100%
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.main {
+    flex: 1 0 auto;
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.footer {
+    margin-top: -1.5em;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+}
+
+.inherit {
+    background-color: inherit;
+}
+
+.layout-fill {
+    height: 100%;
+    width: 100%;
+}
+
+.padding-top-1 {
+    padding-top: 1em;
+}
+
+.padding-bottom-1 {
+    padding-bottom: 1em;
+}
+
+.pad-sides {
+    padding: 0.5em;
+}
+
+.tabs .indicator {
+    background-color: #00796b !important;
+}
+
+.text-base-color {
+    color: #00796b !important;
+}
+
+.top-nav {
+    height: 10em;
+}

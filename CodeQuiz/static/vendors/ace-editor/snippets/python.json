@@ -1,0 +1,3 @@
+{
+    "snippet": "N = int(input())\nfor i in range(N):\n    M = [int(i) for i in input().split()]"
+}
