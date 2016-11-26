@@ -1,11 +1,14 @@
-function url(endpoint) {
-    return `http://139.59.241.214:3000/v1/${endpoint}`;
+function url(endpoint, obj = {}) {
+    let link = `http://139.59.241.214/v3/${endpoint}`;
+    if (obj.expand) link = `${link}?expand=problems`;
+    // console.log(link);
+    return link;
 }
 
 var store = {};
 
 var baseMixin = {
-    delimiters: ["[[", "]]"],
+    // delimiters: ["[[", "]]"],
 };
 
 var problems = new Vue({
@@ -13,24 +16,27 @@ var problems = new Vue({
     el: '#problems',
     store,
     template: `
-<ul class="collapsible" data-collapsible="expandable">
-        <li v-for="c in categories">
-            <div class="collapsible-header mdc-bg-blue-grey-600 mdc-text-grey-100"> [[ c.name ]] </div> 
-            <div class="collapsible-body">
-                <div v-if="c.problems.length === 0">
-                    <p> Coming soon! </p>
-                </div>
-                <div v-else>
-                    <ul class="collection">
-                        <li v-for="p in c.problems" class="collection-item waves-effect waves-purple layout-fill"
-                        @click="redirect(p.title, p.id)">
-                            <span> [[ p.title ]] </span>
-                        </li>
-                    </ul>
-                </div>
+<div id="all-probs" role="tablist" aria-multiselectable="true">
+    <div v-for="c in categories" class="card shadow-depth-1">
+        <div class="card-header problem-card" role="tab" :id="c.name" data-toggle="collapse" data-parent="#all-probs" v-bind:href="c.href_id">
+            <h4>{{ c.name }}</h4>
+            <small>{{ c.description}}</small>
+        </div>
+        <div :id="c.ref_id" class="collapse" role="tabpanel">
+            <div v-if="c.problems.length === 0" class="card-block shadow-depth-1">
+                <p> Coming soon! </p>
             </div>
-        </li>
-</ul>
+            <div v-else class="card-block shadow-depth-1 no-pad">
+                <ul class="problem-list">
+                    <li class="problem-item" v-for="p in c.problems" @click="redirect(p.title, p.id)">
+                        <h5> {{ p.title }} </h5>
+                    </li>
+                    <hr class="mdc-bg-grey-300" style="margin: 0">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
     `,
     data: {
         categories: [],
@@ -48,42 +54,35 @@ var problems = new Vue({
         }
     },
     created: function () {
-        this.$http.get(url("categories"))
+
+        let configs = {
+            expand: true
+        };
+
+        this.$http.get(url("categories", configs))
             .then((response) => {
                 this.categories = response.body;
-
-                this.categories.forEach((e, i) => {
-                    this.categories[i]['problems'] = []
-                }, this);
                 this.calls += 1;
 
-                return this.$http.get(url("problems"));
+                this.categories.forEach((cat, i) => {
+                    cat.ref_id = `category${i}`;
+                    cat.href_id = `#category${i}`;
+                    cat.problems = cat.problems.map((e, j) => {
+                        e.ref_id = `category${j}`;
+                        e.href_id = `#category${j}`;
+                        return e;
+                    })
+                }, this);
             }, (response) => {
                 console.error("Error in getting categories")
-            })
-            .then((response) => {
-                let problems = response.body;
-
-                problems.forEach(e => {
-                    let i = e.category_id - 1;
-                    e.url = this.problem_url(e.title);
-                    this.categories[i].problems.push(e);
-
-                });
-                store["categories"] = this.categories;
-                this.calls += 1;
-            }, (response) => {
-                console.error("Error in getting problems");
-            })
+            });
     },
     updated: function () {
         // Need to initiate collapsible after rendering the item
         if (this.calls > 0) this.calls -= 1; // random line to force update
-        $('.collapsible').collapsible();
+        $('.collapse').collapse();
     }
 });
-
-
 
 
 Vue.component('Editor', {
@@ -122,9 +121,45 @@ var codeMaster = new Vue({
     mixin: [baseMixin],
     el: "#codeMaster",
     store,
+    template: `
+<div>
+    <div style="height: 30em">
+        <editor editor-id="editor" :content="code" v-on:change-content="changeCode" :lang="lang"></editor>
+    </div>
+    <div id="settings" role="tablist" aria-multiselectable="true" style="margin-top:1.5rem">
+        <div class="card">
+            <div class="card-header mdc-bg-indigo-600 mdc-text-grey-100 hover-pointer" role="tab">
+                <h5 style="margin-bottom: 0">
+                    <div data-toggle="collapse" data-parent="#settings" href="#settings-1">
+                        <i class="material-icons icon-text-align-1">settings_applications</i>
+                        <span class="icon-text-align-1">Settings</span>
+                    </div>
+                </h5>
+            </div>
+            <div id="settings-1" class="collapse" role="tabpanel">
+                <div class="card-block">
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="lang-select" class="form-control">
+                            <option value="python">Python</option>
+                            <option value="r">R</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="mbtn btn-block" @click="submit">
+        <i class="material-icons icon-text-align-3">cloud</i>
+        <span class="icon-text-align-3"> Submit </span>
+    </button>
+</div>
+    `,
     data: {
         // I'll maintain 2 copies of the same elements as a hack for materialize to work 
         // nicely with Vue
+        code: "Hello world",
+        lang: "java"
     },
     methods: {
         reset() {
@@ -140,9 +175,11 @@ var codeMaster = new Vue({
             }
         },
         submit() {
+            if (!this.store && this.code) store.code = this.code;
+            else if (!this.code && this.store) this.code = store.code;
             console.log("This: ", this.code);
             console.log("Store: ", store.code);
-            
+
             if (!this.lang && store.lang) this.lang = store.lang;
             else if (!store.lang && this.lang) store.lang = this.lang;
             else if (!store.lang && this.lang) store.lang = this.lang;
@@ -158,8 +195,7 @@ var codeMaster = new Vue({
         this.code = store.code;
         this.lang = store.lang;
     },
-    updated: function () {
-        $('select').material_select(); // Initializes the select for material css
+    beforeUpdate: function () {
         $('#lang-select').on('change', function (e) {
             // grabs the selected data through jQuery
             let selected = $('#lang-select').find(":selected").text();
@@ -173,16 +209,38 @@ var codeMaster = new Vue({
 
 var mdViewer = new Vue({
     mixin: [baseMixin],
-    el: "md-preview",
-    store,
+    el: "#md-preview",
     data: {
         desc: "",
+        qtitle: ""
     },
-    created: function() {
+    template: `
+<div class="card shadow-depth-1">
+    <div class="card-block">
+        <h4 class="card-title"> {{ qtitle }} </h4>
+        <div id="innerMD" v-html="markdown" class="card-text"></div>
+    </div>
+</div>
+`,
+    computed: {
+        markdown: function () {
+            var converter = new showdown.Converter();
+            // console.log(this.desc);
+            var html = converter.makeHtml(this.desc);
+            // html = html.replace(/\$([\S \\\w  ]+)\$/g, function (flag, match, end) {
+            //     console.log(match);
+            //     return katex.renderToString(match);
+            // });
+            return html;
+        }
+    },
+    created: function () {
         let id = location.href.split("/").pop();
         this.$http.get(url(`problems/${id}`))
-            .then((response) => {
-                console.log(response);
+            .then((res) => {
+                let body = res.body;
+                this.desc = body.description;
+                this.qtitle = body.title;
             }, (response) => {
                 console.error(`Problem getting question ${id}`);
             })

@@ -12,7 +12,6 @@ js, css = get_static(['widgets', 'hugefile', 'common'], dev=(os.environ.get("LOC
 payload = {
     'js'   : js,
     'css'  : css,
-    'title': 'ESD Codes'
 }
 
 
@@ -23,13 +22,18 @@ payload = {
 
 @home.route('/')
 def index():
+    payload.update({
+        'title'  : "Welcome",
+        'tagline': "to something fun"
+    })
     return render_template('page/index.html', **payload)
 
 
 @home.route('/tutorial')
 def tutorial():
     payload.update({
-        'title': "Tutorial"
+        'title': "ESD Codes",
+        'tagline': "Pick me up."
     })
     return render_template('page/tutorial.html', **payload)
 
@@ -41,6 +45,7 @@ def problems(name=""):
         return redirect(url_for('.index'))
     payload.update({
         'title': "Problems",
+        "tagline": "I'm owning this.",
         'name': name
     })
 

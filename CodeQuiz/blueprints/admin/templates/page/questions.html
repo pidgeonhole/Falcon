@@ -1,16 +1,6 @@
 {% extends 'layouts/admin.html' %}
 {% block styleTop %}
-<link rel="stylesheet" href="{{ url_for('static', filename='vendors/markdown-plus/mdp.min.css') }}">
-{% endblock %}
-
-{% block header %}
-<div class="container">
-    <div class="jumbotron inherit">
-        <h1>Make your questions</h1>
-        <p class="lead">Setting questions has never been easier..</p>
-        <hr class="mdc-bg-grey-100">
-    </div>
-</div>
+<link rel="stylesheet" href="/static/vendors/markdown-plus/mdp.min.css">
 {% endblock %}
 
 {% block main %}
@@ -74,7 +64,7 @@ Output: 30
                 <p class="lead">Have you ascertained that everything is correct?</p>
             </div>
             <div class="modal-footer">
-                <button v-on:click="speak" class="btn btn-primary">Yes. Save it!</button>
+                <button @click="speak" class="btn btn-primary">Yes. Save it!</button>
                 <button class="btn btn-warn" data-dismiss="modal">Nope..</button>
             </div>
         </div>
@@ -83,9 +73,14 @@ Output: 30
 {% endblock %}
 
 {% block scripts %}
-<script type="text/javascript" src="{{ url_for('static', filename='vendors/markdown-plus/mdp.min.js') }} "></script>
+<script type="text/javascript" src="/static/vendors/markdown-plus/mdp.min.js"></script>
 <script>
     $("#TestCases").height($("#TestCases")[0].scrollHeight);
-
+    $("#mdp-container").css({
+        "width": $(".container")[1].scrollWidth - 10,
+        "min-height": "75%",
+        "height": "75%",
+        "margin": "auto"
+    });
 </script>
 {% endblock %}

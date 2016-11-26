@@ -1,0 +1,45 @@
+.mbtn {
+    position: relative;
+    overflow: hidden;
+    background-color: #26A69A;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 0.2em;
+}
+
+.mbtn:after {
+    content: "";
+    background: rgba(255, 255, 255, 0.3);
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    padding-top: 240%;
+    padding-left: 240%;
+    margin-top: -120%;
+    margin-left: -120%;
+    opacity: 0;
+    transition: all 1s
+}
+
+.mbtn:active:after {
+    padding-top: 0;
+    padding-left: 0;
+    margin-top: 0;
+    margin-left: 0;
+    opacity: 1;
+    transition: 0.2s
+}
+
+.mbtn:hover,
+.mbtn:focus {
+    background-color: #00796B;
+}
+
+.mbtn.red {
+    background-color: #ef5350;
+}
+
+.mbtn.red:hover,
+.mbtn.red:focus {
+    background-color: #c62828;
+}

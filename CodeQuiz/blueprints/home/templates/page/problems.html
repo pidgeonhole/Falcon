@@ -1,37 +1,22 @@
 {% extends 'layouts/common.html' %}
 <!-- -->
-{% block css %} {% endblock %}
+{% block topScripts %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
+<script src="/static/vendors/showdown/sd.js"></script>
+<script src="/static/vendors/showdown/sdkatex.js"></script> {% endblock %}
+<!-- -->
 <!-- -->
 {% block main %}
 <div class="container">
-    <p>Problem</p>
+    <h2>Problem</h2>
     <div id="md-preview"></div>
-    <p>Solution</p>
-    <div id="codeMaster">
-        <div style="height: 30em">
-            <editor editor-id="editor" :content="code" v-on:change-content="changeCode" :lang="lang"></editor>
-        </div>
-        <ul class="collapsible popout" data-collapsible="accordion">
-            <li>
-                <div class="collapsible-header"><i class="material-icons">settings_applications</i>Settings</div>
-                <div class="collapsible-body">
-                    <div class="pad-sides">
-                        <label>Language</label>
-                        <select id="lang-select">
-                            <option value="python">Python</option>
-                            <option value="r">R</option>
-                        </select>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <a class="waves-effect waves-light btn" @click="submit"><i class="material-icons left">cloud</i>Submit</a>
-    </div>
+    <h2>Solution</h2>
+    <div id="codeMaster"></div>
 </div>
 {% endblock %}
 <!-- -->
 {% block scripts1 %}
 <script src="/static/vendors/ace-editor/ace.js"></script> {% endblock %}
 <!-- -->
-{% block scripts %} 
-<script src="https://cdn.rawgit.com/showdownjs/showdown/1.5.0/dist/showdown.min.js"></script> {% endblock %}
+{% block scripts %} {% endblock %}

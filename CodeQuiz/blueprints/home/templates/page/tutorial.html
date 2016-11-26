@@ -1,13 +1,13 @@
 {% extends 'layouts/common.html' %}
 <!-- -->
-{% block css %}
+{% block topScripts %}
 <link rel="stylesheet" href="/static/vendors/prism/prism.css"> {% endblock %}
 <!-- -->
 {% block main %}
 <div class="container">
     <div class="section">
-        <h5>Basic usage</h5>
-        <section>
+        <h2>Basic usage</h2>
+        <section class="lead">
             After selecting the language you are working with, you can start typing away in the editor. Otherwise, you can simply copy
             and paste your code from your favourite IDE and submit it.
             <br><br> The number of test cases and the inputs for the test cases will be read from the standard input. After
@@ -15,10 +15,10 @@
             you don't understand what we're saying now. We'll go through some examples in this document.
         </section>
     </div>
-    <div class="divider"></div>
+    <hr class="mdc-bg-grey-500">
     <div class="section">
-        <h5>Simple Example: Summation</h5>
-        <section>
+        <h2>Simple Example: Summation</h2>
+        <section class="lead">
             Assume we have the following problem where we are given some list of numbers and the question is: "What is their sum?" <br>            The input file could look like the following
             <pre>
                 <code class="language-markdown">
@@ -38,21 +38,26 @@
             </pre>
         </section>
     </div>
-    <div class="divider"></div>
+    <hr class="mdc-bg-grey-500">
     <div class="section">
-        <h5>Reading and writing to standard input/output</h5>
-        <section>
+        <h2>Reading and writing to standard input/output</h2>
+        <section class="lead">
             We'll use the example "summation" question above in this tutorial. Here's how to solve it.
             <div>
-                <div>
-                    <ul class="tabs tabs-fixed-width">
-                        <li class="tab"><a href="#python" class="text-base-color">Python</a></li>
-                        <li class="tab"><a href="#r" class="text-base-color">R</a></li>
+                <div style="margin: 0.5rem 0rem">
+                    <ul class="nav nav-tabs" role=tablist>
+                        <li class="nav-item">
+                            <a href="#python" class="nav-link active text-base-color" data-toggle="tab" role="tab">Python</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#r" class="nav-link text-base-color" data-toggle="tab" role="tab">R</a>
+                        </li>
                     </ul>
                 </div>
-                <div id="python" class="col-s12">
-                    <pre>
-                        <code class="language-python">
+                <div class="tab-content">
+                    <div id="python" class="tab-pane active" role="tabpanel">
+                        <pre>
+                            <code class="language-python">
                             N = int(input()) # Read from standard input with input() and convert to integer
                             
                             for i in range(N):
@@ -65,11 +70,11 @@
                                 
                                 print(message)  # print your final answer to standard output
                         </code>
-                    </pre>
-                </div>
-                <div id="r">
-                    <pre>
-                        <code class="language-r">
+                        </pre>
+                    </div>
+                    <div id="r" class="tab-pane active" role="tabpanel">
+                        <pre>
+                            <code class="language-r">
                             f = file("stdin")
                             lines = readLines(f)  # Read all lines from standard input
 
@@ -91,20 +96,20 @@
                                 write(message, stdout())
                             }
                         </code>
-                    </pre>
+                        </pre>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
-    <div class="divider"></div>
+    <hr class="mdc-bg-grey-500">
     <div class="section">
-        <h5>Conclusion</h5>
-        <section>
-            That's all there is. Hoping playing! <br> 
+        <h2>Conclusion</h2>
+        <section class="lead">
+            That's all there is. Hoping playing! <br>
             <i class="material-icons">sentiment_very_satisfied</i>
         </section>
     </div>
-
 </div>
 {% endblock %}
 <!-- -->
