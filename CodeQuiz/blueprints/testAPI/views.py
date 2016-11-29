@@ -49,8 +49,9 @@ def func(p=0, current=0):
     return sum([func(i, current+i) for i in coins if i >= p])
 """
     s2 = """
-def func(target):
-    coins = (1, 2, 5, 10, 20, 50, 100, 200)
+
+
+def func(target, coins=(1, 2, 5, 10, 20, 50, 100, 200)):
     ways = [0] * (target + 1)
     ways[0] = 1
     for i in coins:
