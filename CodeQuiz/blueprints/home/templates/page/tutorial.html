@@ -64,11 +64,8 @@
                                 string = input()  # Now I've read in the numbers, i.e. 1 2 3 4 5 6 but it's a string
                                 nums = [int(j) for j in string.split()]   # converts string to list of integers
                                 answer = sum(nums)  # Get answer
-
-                                # Format message properly
-                                message = "Case #{case_no}: {ans}".format(case_no = i + 1, ans = answer)
                                 
-                                print(message)  # print your final answer to standard output
+                                print(answer)  # print your final answer to standard output
                         </code>
                         </pre>
                     </div>
@@ -89,11 +86,10 @@
                                 list.of.num = as.numeric(list.of.char)
                                 
                                 # Prepare answer
-                                answer = sum(list_of_num)
-                                message = sprintf("Case #%d: %d", i, answer)
-                                
+                                answer = sum(list.of.num)
+
                                 # Print answer to standard output
-                                write(message, stdout())
+                                write(answer, stdout())
                             }
                         </code>
                         </pre>

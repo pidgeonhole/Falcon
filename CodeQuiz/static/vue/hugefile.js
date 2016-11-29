@@ -126,6 +126,10 @@ var codeMaster = new Vue({
     <div style="height: 30em">
         <editor editor-id="editor" :content="code" v-on:change-content="changeCode" :lang="lang"></editor>
     </div>
+    <div class="form-group" style="margin-top: 1em">
+        <label for="team-name"><h4>Team Name</h4></label>
+        <input type="text" class="form-control" placeholder="name" id="team-name" v-model="name" required/>
+    </div>
     <div id="settings" role="tablist" aria-multiselectable="true" style="margin-top:1.5rem">
         <div class="card">
             <div class="card-header mdc-bg-indigo-600 mdc-text-grey-100 hover-pointer" role="tab">
@@ -149,17 +153,50 @@ var codeMaster = new Vue({
             </div>
         </div>
     </div>
-    <button class="mbtn btn-block" @click="submit">
-        <i class="material-icons icon-text-align-3">cloud</i>
-        <span class="icon-text-align-3"> Submit </span>
+    <button class="mbtn btn-block" @click="submit" :class="submitButtonClass" :disabled="this.loading">
+        <div v-if="!this.loading">
+            <i class="material-icons icon-text-align-3">cloud</i>
+            <span class="icon-text-align-3"> Submit </span>
+        </div>
+        <div v-else>
+            <span class="icon-text-align-3"> Loading </span>
+        </div>
     </button>
+    <div class="modal fade" id="resultsModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Results</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Name: {{ name }} <br>
+                        Score: {{ results.passed }} / {{ results.num_tests}}
+                    </p>
+                    <p v-if="results.errored > 0" class="mdc-text-red-600">
+                        There has been some errors. Check if your code is correct or that you selected the right
+                        language in the settings.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
     `,
     data: {
         // I'll maintain 2 copies of the same elements as a hack for materialize to work 
         // nicely with Vue
         code: "Hello world",
-        lang: "java"
+        lang: "java",
+        name: "",
+        loading: false,
+        results: {}
     },
     methods: {
         reset() {
@@ -175,18 +212,55 @@ var codeMaster = new Vue({
             }
         },
         submit() {
+            // Making sure that all info are aligned
             if (!this.store && this.code) store.code = this.code;
             else if (!this.code && this.store) this.code = store.code;
-            console.log("This: ", this.code);
-            console.log("Store: ", store.code);
 
-            if (!this.lang && store.lang) this.lang = store.lang;
-            else if (!store.lang && this.lang) store.lang = this.lang;
-            else if (!store.lang && this.lang) store.lang = this.lang;
+            if (!store.lang && this.lang) store.lang = this.lang;
+            else if (!store.lang && !this.lang) store.lang = "python";
             this.lang = store.lang;
 
-            console.log("This: ", this.lang);
-            console.log("Store: ", store.lang);
+            let id = location.href.split("/").pop();
+
+            if (this.name.length === 0) {
+                alert("Name field is blank");
+                return;
+            }
+
+            this.loading = true;
+            this.$http.post(url(`problems/${id}/submissions`), {
+                    name: this.name,
+                    source_code: this.code,
+                    language: this.lang
+                })
+                .then((res) => {
+                    this.results = res.body;
+                    this.loading = false;
+                    console.log(this.results);
+                    $('#resultsModal').modal();
+                }, (res) => {
+                    console.error("Error posting data")
+                    this.loading = false;
+                })
+        }
+    },
+    computed: {
+        submitButtonClass: function () {
+            return {
+                grey: this.loading,
+            };
+        },
+        mainWaiting: function () {
+            return {
+                visible: !this.loading,
+                "not-visible": this.loading
+            };
+        },
+        transWaiting: function () {
+            return {
+                visible: this.loading,
+                "not-visible": !this.loading
+            };
         }
     },
     created: function () {
@@ -201,7 +275,6 @@ var codeMaster = new Vue({
             let selected = $('#lang-select').find(":selected").text();
             store.lang = selected.toLowerCase();
             this.lang = store.lang;
-            console.log(store.lang, this.lang);
         });
     }
 });

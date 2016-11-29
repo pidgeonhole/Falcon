@@ -158,6 +158,14 @@ body {
     height: 10rem;
 }
 
+.visible {
+    visibility: visible
+}
+
+.not-visible {
+    visibility: hidden
+}
+
 .width-fill {
     width: 100%;
 }
