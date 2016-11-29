@@ -236,7 +236,6 @@ var codeMaster = new Vue({
                 .then((res) => {
                     this.results = res.body;
                     this.loading = false;
-                    console.log(this.results);
                     $('#resultsModal').modal();
                 }, (res) => {
                     console.error("Error posting data")
