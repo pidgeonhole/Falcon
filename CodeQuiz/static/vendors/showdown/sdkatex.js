@@ -13,14 +13,19 @@
         throw Error('Could not find showdown library');
     }
 }(function (showdown) {
-    // ```katex\n([\S]+)\n```
     showdown.extension('sdkatex', function () {
-        // console.log('extended');
+        // Katex extensions
         return [{
             type: 'lang',
             filter: function (text) {
-                return text.replace(/\s$([\S]+)$\s/, function (flag, match, end) {
-                    console.log(match);
+                return text.replace(/`katex\s([\S\$ \\\w]+)`/g, function (flag, match, end) {
+                    return katex.renderToString(match);
+                })
+            }
+        }, {
+            type: 'lang',
+            filter: function (text) {
+                return text.replace(/```katex\n([\S]+)\n```/g, function (flag, match, end) {
                     return katex.renderToString(match);
                 })
             }

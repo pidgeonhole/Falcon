@@ -174,9 +174,18 @@ var codeMaster = new Vue({
                 <div class="modal-body">
                     <p>
                         Name: {{ name }} <br>
-                        Score: {{ results.passed }} / {{ results.num_tests}}
+                        Score: {{ results.tests_passed }} / {{ results.num_tests}}
                     </p>
-                    <p v-if="results.errored > 0" class="mdc-text-red-600">
+                    <div>
+                        <ul>
+                            <li v-for="(item, index) in results.results">
+                                Test Case {{ index + 1 }}: 
+                                <span v-if="item.result==='passed'" class="mdc-text-teal-800"> Passed </span>
+                                <span v-else class="mdc-text-red-800"> Failed </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <p v-if="results.tests_errored > 0" class="mdc-text-red-600">
                         There has been some errors. Check if your code is correct or that you selected the right
                         language in the settings.
                     </p>
@@ -234,6 +243,7 @@ var codeMaster = new Vue({
                     language: this.lang
                 })
                 .then((res) => {
+                    console.log(res.body);
                     this.results = res.body;
                     this.loading = false;
                     $('#resultsModal').modal();
@@ -296,13 +306,8 @@ var mdViewer = new Vue({
 `,
     computed: {
         markdown: function () {
-            var converter = new showdown.Converter();
-            // console.log(this.desc);
+            var converter = new showdown.Converter({extensions: ['sdkatex'] });
             var html = converter.makeHtml(this.desc);
-            // html = html.replace(/\$([\S \\\w  ]+)\$/g, function (flag, match, end) {
-            //     console.log(match);
-            //     return katex.renderToString(match);
-            // });
             return html;
         }
     },

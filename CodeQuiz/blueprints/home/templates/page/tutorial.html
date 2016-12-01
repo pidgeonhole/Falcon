@@ -19,21 +19,31 @@
     <div class="section">
         <h2>Simple Example: Summation</h2>
         <section class="lead">
-            Assume we have the following problem where we are given some list of numbers and the question is: "What is their sum?" <br>            The input file could look like the following
+            <p>
+                Assume we have the following problem where we are given some list of numbers and the question is: "What is their sum?"
+            </p>
+            <p>
+                Usually, we will start off by telling you the expected input you'd receive and go on to tell you what is the output of the
+                answer we expect. The game can contain X number of test cases and in each test case, contain Y number of
+                trials. You won't need to worry about the number of test cases. However, you'll have to take care of the
+                number of trials if we specify them. For example, in this case, we have 1 test case and 3 trials. Therefore,
+                the input could look like this:
+            </p>
             <pre>
                 <code class="language-markdown">
-                    3             # number of test cases
+                    3             # number of trials in 1 test case
                     1 2 3 4 5 6   # input 1
                     2 3 4 5 6     # input 2
                     6 5 -1 2 2    # input 3
                 </code>
             </pre>
-            <br> Ideally, your answer (output) should be printed like so
+            <p> All your output needs to be printed to standard output (described further below). Thus, returning to the example,
+                the correct answer will have an output that looks like this:</p>
             <pre>
                 <code class="language-markdown">
-                    Case #1: 21
-                    Case #2: 20
-                    Case #3: 14
+                    21
+                    20
+                    14
                 </code>
             </pre>
         </section>
@@ -42,7 +52,7 @@
     <div class="section">
         <h2>Reading and writing to standard input/output</h2>
         <section class="lead">
-            We'll use the example "summation" question above in this tutorial. Here's how to solve it.
+            <p>We'll use the example "summation" question above in this tutorial. Here's how to solve it.</p>
             <div>
                 <div style="margin: 0.5rem 0rem">
                     <ul class="nav nav-tabs" role=tablist>
@@ -96,6 +106,7 @@
                     </div>
                 </div>
             </div>
+            <p>Essentially, printing to standard output is as easy as <code>print()</code> in Python. There are equivalents in R and the other languages so we won't go through all of them here. However, one last thing to note is that you should only <strong>print</strong> your final answer because we register that as your intended solution. </p>
         </section>
     </div>
     <hr class="mdc-bg-grey-500">
