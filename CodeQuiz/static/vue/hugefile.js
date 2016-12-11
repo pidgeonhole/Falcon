@@ -7,12 +7,8 @@ function url(endpoint, obj = {}) {
 
 var store = {};
 
-var baseMixin = {
-    // delimiters: ["[[", "]]"],
-};
 
 var problems = new Vue({
-    mixins: [baseMixin],
     el: '#problems',
     store,
     template: `
@@ -91,34 +87,38 @@ Vue.component('Editor', {
     data: function () {
         return {
             editor: Object,
-            beforeContent: ''
+            beforeContent: '',
+            ace: null
         }
     },
     watch: {
         content: function (value) {
-            if (this.beforeContent !== value) this.editor.setValue(value, 1);
+            if (this.beforeContent !== value) this.editor.setValue(value, 1)
         }
     },
     mounted() {
-        let lang = this.lang || 'python';
-        let theme = this.theme || 'xcode';
+        let lang = this.lang || 'python'
+        let theme = this.theme || 'xcode'
 
-        this.editor = window.ace.edit(this.editorId);
-        this.editor.setValue(this.content, 1);
+        if (!window.ace) {
+            return
+        }
 
-        this.editor.getSession().setMode(`ace/mode/${lang}`);
-        this.editor.setTheme(`ace/theme/${theme}`);
+        this.editor = window.ace.edit(this.editorId)
+        this.editor.setValue(this.content, 1)
+
+        this.editor.getSession().setMode(`ace/mode/${lang}`)
+        this.editor.setTheme(`ace/theme/${theme}`)
 
         this.editor.on('change', () => {
-            this.beforeContent = this.editor.getValue();
-            this.$emit('change-content', this.editor.getValue());
-        });
+            this.beforeContent = this.editor.getValue()
+            this.$emit('change-content', this.editor.getValue())
+        })
     }
-});
+})
 
 
 var codeMaster = new Vue({
-    mixin: [baseMixin],
     el: "#codeMaster",
     store,
     template: `
@@ -201,7 +201,7 @@ var codeMaster = new Vue({
     methods: {
         reset() {
             // Will add a function to reset later
-            store.code = 'reset content for Editor';
+//            store.code = 'reset content for Editor';
             this.code = store.code;
         },
         changeCode(val) {
@@ -280,7 +280,6 @@ var codeMaster = new Vue({
 
 
 var mdViewer = new Vue({
-    mixin: [baseMixin],
     el: "#md-preview",
     data: {
         desc: "",
@@ -296,25 +295,27 @@ var mdViewer = new Vue({
 `,
     computed: {
         markdown: function () {
-            var converter = new showdown.Converter();
-            // console.log(this.desc);
-            var html = converter.makeHtml(this.desc);
-            // html = html.replace(/\$([\S \\\w  ]+)\$/g, function (flag, match, end) {
-            //     console.log(match);
-            //     return katex.renderToString(match);
-            // });
-            return html;
+            try {
+                var converter = new showdown.Converter({ extensions: ['sdkatex'] })
+                var html = converter.makeHtml(this.desc)
+                return html
+            } catch (e) { /* When showdown.js script not loaded, skip this */ }
         }
     },
     created: function () {
-        let id = location.href.split("/").pop();
+        let id = location.href.split("/").pop()
+
+        if (id.length === 0) {
+            return // Not in page where we need to call questions description
+        }
+
         this.$http.get(url(`problems/${id}`))
             .then((res) => {
-                let body = res.body;
-                this.desc = body.description;
-                this.qtitle = body.title;
+                let body = res.body
+                this.desc = body.description
+                this.qtitle = body.title
             }, (response) => {
-                console.error(`Problem getting question ${id}`);
+                console.error(`Problem getting question ${id}`)
             })
     }
 })
