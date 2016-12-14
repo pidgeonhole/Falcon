@@ -74,11 +74,9 @@
 <script src="/static/vendors/jquery-3.1.1.min.js"></script>
 <script src="/static/vendors/tether.min.js"></script>
 <script src="/static/vendors/bootstrap.min.js"></script>
-<!-- Bundle file. Must be placed at bottom of page -->
 {% for f in js %}
 <script src="{{ f }}"></script>
 {% endfor %}
-<!-- Priority 0 scripts -->
 {% block scripts %} {% endblock %}
 </body>
 

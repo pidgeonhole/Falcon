@@ -1,8 +1,8 @@
 import os
+from collections import deque
 from random import randrange
 
-from config import settings
-from .datastore import MATERIAL_ICON_LISTS
+from .u_datastore import MATERIAL_ICON_LISTS
 
 __BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
 
@@ -21,7 +21,7 @@ def get_icon(n: int = 1):
     return icons
 
 
-def get_static(files: list, dev=False, folders=('', 'react', 'vue', 'css')):
+def get_static(files: list, folders=('', 'vue', 'css')):
     """
     Returns list of static files. The list will be passed to flask which will then render them in HTML.
     This way, static files are called automatically.
@@ -32,23 +32,20 @@ def get_static(files: list, dev=False, folders=('', 'react', 'vue', 'css')):
     """
 
     static_folder = os.path.join(__BASE_DIR, 'CodeQuiz', 'static')
+    js = deque()
+    css = deque()
 
-    prefix = "/static"
-    if dev:
-        print("Using Local Services, DEV MODE")
-        # prefix = settings.WEBPACK_DEV_SERVER + '/'
-
-    js = []
-    css = []
     for h in folders:
         for i in os.listdir(os.path.join(static_folder, h)):
             for j in files:
-                f = prefix + '/' + h + '/' + i # if not dev else prefix + i
-                if i.endswith('.js') and j in i:
-                    js.append(f)
+                f = "/static/%s/%s" % (h, i)
+                if i.endswith('.js') and j in i and i.startswith(j):
+                    if i.startswith('app'):
+                        js.append(f)
+                    else:
+                        js.appendleft(f)
                     break
-                elif i.endswith('.css') and j in i:
+                elif i.endswith('.css') and j in i and i.startswith(j):
                     css.append(f)
                     break
     return js, css
-
