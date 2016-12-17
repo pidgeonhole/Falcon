@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, make_response, render_template, request
 from flask_cors import CORS
 
-from utils.funcs import get_icon
+from utils.u_funcs import get_icon
 
 testAPI = Blueprint('testAPI', __name__, template_folder='templates')
 CORS(testAPI)

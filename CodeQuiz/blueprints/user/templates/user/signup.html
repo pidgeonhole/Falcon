@@ -1,0 +1,43 @@
+{% extends 'layouts/common.html' %} {% import 'macros/forms.html' as f with context %}
+<!-- -->
+{% block main %}
+<div class="container">
+    <div class="card shadow-depth-1">
+        <div class="card-block">
+            <div class="card-text">
+                {% call f.form_tag('user.signup') %}
+                <legend>Sign up</legend>
+                <!-- Username -->
+                {% call f.form_group(form.username) %}{% endcall %}
+                <!-- Email -->
+                {% call f.form_group(form.email) %}{% endcall %}
+                <!-- Password -->
+                {% call f.form_group(form.password) %}{% endcall %}
+                <!-- Confirm Password-->
+                {% call f.form_group(form.confirm) %}{% endcall %}
+                <!-- First Name -->
+                {% call f.form_group(form.first_name) %}{% endcall %}
+                <!-- Last Name -->
+                {% call f.form_group(form.last_name) %}{% endcall %}
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn mdc-bg-indigo-700 mdc-text-grey-100">Register</button>
+                    </div>
+                </div>
+                {% endcall %}
+            </div>
+        </div>
+        <!-- Flash starts -->
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <div class="card-block">
+            {% for m in messages %}
+            <div class="alert alert-danger" role="alert"><strong>{{ m }}</strong></div> {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+        <!-- Flash Ends -->
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<!-- End of File -->
+{% endblock %}

@@ -7,12 +7,8 @@ function url(endpoint, obj = {}) {
 
 var store = {};
 
-var baseMixin = {
-    // delimiters: ["[[", "]]"],
-};
 
 var problems = new Vue({
-    mixins: [baseMixin],
     el: '#problems',
     store,
     template: `
@@ -85,50 +81,13 @@ var problems = new Vue({
 });
 
 
-Vue.component('Editor', {
-    template: '<div :id="editorId" style="width: 100%; height: 100%;"></div>',
-    props: ['editorId', 'content', 'lang', 'theme'],
-    data: function () {
-        return {
-            editor: Object,
-            beforeContent: ''
-        }
-    },
-    watch: {
-        content: function (value) {
-            if (this.beforeContent !== value) this.editor.setValue(value, 1);
-        }
-    },
-    mounted() {
-        let lang = this.lang || 'python';
-        let theme = this.theme || 'xcode';
-
-        this.editor = window.ace.edit(this.editorId);
-        this.editor.setValue(this.content, 1);
-
-        this.editor.getSession().setMode(`ace/mode/${lang}`);
-        this.editor.setTheme(`ace/theme/${theme}`);
-
-        this.editor.on('change', () => {
-            this.beforeContent = this.editor.getValue();
-            this.$emit('change-content', this.editor.getValue());
-        });
-    }
-});
-
-
 var codeMaster = new Vue({
-    mixin: [baseMixin],
     el: "#codeMaster",
     store,
     template: `
 <div>
     <div style="height: 30em">
         <editor editor-id="editor" :content="code" v-on:change-content="changeCode" :lang="lang"></editor>
-    </div>
-    <div class="form-group" style="margin-top: 1em">
-        <label for="team-name"><h4>Team Name</h4></label>
-        <input type="text" class="form-control" placeholder="name" id="team-name" v-model="name" required/>
     </div>
     <div id="settings" role="tablist" aria-multiselectable="true" style="margin-top:1.5rem">
         <div class="card">
@@ -203,14 +162,13 @@ var codeMaster = new Vue({
         // nicely with Vue
         code: "Hello world",
         lang: "java",
-        name: "",
         loading: false,
         results: {}
     },
     methods: {
         reset() {
             // Will add a function to reset later
-            store.code = 'reset content for Editor';
+            //            store.code = 'reset content for Editor';
             this.code = store.code;
         },
         changeCode(val) {
@@ -230,11 +188,6 @@ var codeMaster = new Vue({
             this.lang = store.lang;
 
             let id = location.href.split("/").pop();
-
-            if (this.name.length === 0) {
-                alert("Name field is blank");
-                return;
-            }
 
             this.loading = true;
             this.$http.post(url(`problems/${id}/submissions`), {
@@ -290,7 +243,6 @@ var codeMaster = new Vue({
 
 
 var mdViewer = new Vue({
-    mixin: [baseMixin],
     el: "#md-preview",
     data: {
         desc: "",
@@ -306,20 +258,36 @@ var mdViewer = new Vue({
 `,
     computed: {
         markdown: function () {
+<<<<<<< HEAD:CodeQuiz/static/vue/hugefile.js
             var converter = new showdown.Converter({extensions: ['sdkatex'] });
             var html = converter.makeHtml(this.desc);
             return html;
+=======
+            try {
+                var converter = new showdown.Converter({
+                    extensions: ['sdkatex']
+                })
+                var html = converter.makeHtml(this.desc)
+                return html
+            } catch (e) { /* When showdown.js script not loaded, skip this */ }
+>>>>>>> client:CodeQuiz/static/vue/apps.js
         }
     },
     created: function () {
-        let id = location.href.split("/").pop();
+        let split = location.pathname.split('/')
+        let id = split.pop()
+
+        if (split[1] !== 'problems') {
+            return // Not in page where we need to call questions description
+        }
+
         this.$http.get(url(`problems/${id}`))
             .then((res) => {
-                let body = res.body;
-                this.desc = body.description;
-                this.qtitle = body.title;
+                let body = res.body
+                this.desc = body.description
+                this.qtitle = body.title
             }, (response) => {
-                console.error(`Problem getting question ${id}`);
+                console.error(`Problem getting question ${id}`)
             })
     }
 })

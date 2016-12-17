@@ -63,6 +63,10 @@ body {
     width: 100%;
 }
 
+.mdc-bg-white {
+    background-color: #ffffff;
+}
+
 .no-pad {
     padding: 0;
 }
