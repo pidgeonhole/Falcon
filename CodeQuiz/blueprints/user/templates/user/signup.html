@@ -5,17 +5,24 @@
     <div class="card shadow-depth-1">
         <div class="card-block">
             <div class="card-text">
-                {% call f.form_tag('user.login') %}
-                <legend>Sign in to continue</legend>
-                <!-- Username / Email-->
-                {% call f.form_group(form.identity) %}{% endcall %}
+                {% call f.form_tag('user.signup') %}
+                <legend>Sign up</legend>
+                <!-- Username -->
+                {% call f.form_group(form.username) %}{% endcall %}
+                <!-- Email -->
+                {% call f.form_group(form.email) %}{% endcall %}
                 <!-- Password -->
                 {% call f.form_group(form.password) %}{% endcall %}
+                <!-- Confirm Password-->
+                {% call f.form_group(form.confirm) %}{% endcall %}
+                <!-- First Name -->
+                {% call f.form_group(form.first_name) %}{% endcall %}
+                <!-- Last Name -->
+                {% call f.form_group(form.last_name) %}{% endcall %}
                 <hr>
                 <div class="row">
                     <div class="col-md-6">
-                        <button type="submit" class="btn mdc-bg-indigo-700 mdc-text-grey-100">Sign In</button>
-                        <a href="{{ url_for('user.signup') }}" class="btn mdc-bg-orange-700 mdc-text-grey-100">Register</a>
+                        <button type="submit" class="btn mdc-bg-indigo-700 mdc-text-grey-100">Register</button>
                     </div>
                 </div>
                 {% endcall %}

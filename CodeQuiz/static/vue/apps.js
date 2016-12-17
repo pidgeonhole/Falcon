@@ -89,10 +89,6 @@ var codeMaster = new Vue({
     <div style="height: 30em">
         <editor editor-id="editor" :content="code" v-on:change-content="changeCode" :lang="lang"></editor>
     </div>
-    <div class="form-group" style="margin-top: 1em">
-        <label for="team-name"><h4>Team Name</h4></label>
-        <input type="text" class="form-control" placeholder="name" id="team-name" v-model="name" required/>
-    </div>
     <div id="settings" role="tablist" aria-multiselectable="true" style="margin-top:1.5rem">
         <div class="card">
             <div class="card-header mdc-bg-indigo-600 mdc-text-grey-100 hover-pointer" role="tab">
@@ -157,14 +153,13 @@ var codeMaster = new Vue({
         // nicely with Vue
         code: "Hello world",
         lang: "java",
-        name: "",
         loading: false,
         results: {}
     },
     methods: {
         reset() {
             // Will add a function to reset later
-//            store.code = 'reset content for Editor';
+            //            store.code = 'reset content for Editor';
             this.code = store.code;
         },
         changeCode(val) {
@@ -184,11 +179,6 @@ var codeMaster = new Vue({
             this.lang = store.lang;
 
             let id = location.href.split("/").pop();
-
-            if (this.name.length === 0) {
-                alert("Name field is blank");
-                return;
-            }
 
             this.loading = true;
             this.$http.post(url(`problems/${id}/submissions`), {
@@ -259,16 +249,19 @@ var mdViewer = new Vue({
     computed: {
         markdown: function () {
             try {
-                var converter = new showdown.Converter({ extensions: ['sdkatex'] })
+                var converter = new showdown.Converter({
+                    extensions: ['sdkatex']
+                })
                 var html = converter.makeHtml(this.desc)
                 return html
             } catch (e) { /* When showdown.js script not loaded, skip this */ }
         }
     },
     created: function () {
-        let id = location.href.split("/").pop()
+        let split = location.pathname.split('/')
+        let id = split.pop()
 
-        if (id.length === 0) {
+        if (split[1] !== 'problems') {
             return // Not in page where we need to call questions description
         }
 

@@ -16,6 +16,7 @@
     <script src="https://unpkg.com/vuex"></script>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/static/vendors/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/vendors/bootstrap-flex.min.css">
     <script src="/static/vendors/jquery-3.1.1.min.js"></script>
     <script src="/static/vendors/tether.min.js"></script>
     <script src="/static/vendors/bootstrap.min.js"></script>
@@ -28,20 +29,7 @@
 </head>
 
 <body>
-    <header class="navbar navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url_for('admin.index') }}">Admin Pages</a>
-            <ul class="nav navbar-nav">
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="admin-nav-dropdown" aria-haspopup="true" aria-expanded="false">Navigation</a>
-                    <div class="dropdown-menu" aria-labelledby="admin-nav-dropdown">
-                        <a href="{{ url_for('admin.questions') }}" class="dropdown-item">Set Questions</a>
-                        <a href="#" class="dropdown-item">Edit Questions</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </header>
+    {% include 'headers/admin_header.html' %}
     <div class="mdc-bg-indigo-800 mdc-text-grey-100 width-fill intro-bar shadow-depth-2">
         <div class="container">
             <h1 class="intro-title">{{title}}</h1>
@@ -54,8 +42,8 @@
     <!-- Modals -->
     {% block modals %} {% endblock %}
     <!-- Footer -->
-    <footer class="page-footer shadow-depth-2">
-        <div class="layout-fill mdc-bg-teal-700 mdc-text-grey-100 footer">
+    <footer class="footer shadow-depth-2">
+        <div class="layout-fill mdc-bg-indigo-800 mdc-text-grey-100 footer-content">
             <div class="container">
                 <div class="row">
                     <div class="col-xs">
@@ -80,7 +68,7 @@
             </div>
         </div>
     </footer>
-    <!--<script src="/static/vue/widgets.js"></script> -->
+
     {% block scripts %} {% endblock %}
 </body>
 

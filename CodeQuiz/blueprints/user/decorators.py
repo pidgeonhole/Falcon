@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import flash, redirect
+from flask import flash, redirect, url_for
 from flask_login import current_user
 
 
@@ -35,7 +35,7 @@ def role_required(*roles):
         def decorated_func(*args, **kwargs):
             if current_user.role not in roles:
                 flash('You do not have permission to do that.', 'error')
-                return redirect('/')
+                return redirect(url_for('home.index'))
 
             return f(*args, **kwargs)
 

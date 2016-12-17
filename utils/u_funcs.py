@@ -1,6 +1,9 @@
 import os
 from collections import deque
 from random import randrange
+from urllib.parse import urljoin
+
+from flask import request
 
 from .u_datastore import MATERIAL_ICON_LISTS
 
@@ -49,3 +52,12 @@ def get_static(files: list, folders=('', 'vue', 'css')):
                     css.append(f)
                     break
     return js, css
+
+
+def safe_url(url):
+    """
+    Ensures a relative url path is on the same domain (i.e. pidgeonhole.spaces). Prevents open redirect attacks
+    :param url: relative url
+    :return: safe url path
+    """
+    return urljoin(request.host_url, url)

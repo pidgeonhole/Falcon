@@ -90,3 +90,27 @@ class User(UserMixin, ResourceMixin, db.Model):
 
         self.save()
         return self
+
+    def is_active(self):
+        """
+        Check if user is active.
+        :return: bool, True if user is active; False otherwise
+        """
+        return self.active
+
+    def deactivate(self):
+        """
+        Deactivate user. Could be because user doesn't want his account like Facebook deactivate. Or cause user
+        is an asshole
+        :return: self
+        """
+        self.active = False
+        return self
+
+    def activate(self):
+        """
+        Activate User. Make user account playable again
+        :return: self
+        """
+        self.active = True
+        return self

@@ -32,11 +32,7 @@
 </head>
 
 <body class="mdc-bg-grey-100">
-<header class="navbar navbar-static-top">
-    <div class="container">
-        <a href="{{ url_for('home.index') }}" class="navbar-brand mdc-text-grey-700">ESD Codes</a>
-    </div>
-</header>
+{% include 'headers/common_header.html' %}
 <div class="layout-fill mdc-bg-teal-700 mdc-text-grey-100 intro-bar shadow-depth-2">
     <div class="container">
         <h1 class="intro-title">{{title}}</h1>
