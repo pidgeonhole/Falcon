@@ -51,6 +51,16 @@ function git_remote_add () {
   echo "Done!"
 }
 
+function install_accessories () {
+  echo "Installing Accessory Software"
+  ssh -t "${SSH_SERVER}" bash -c "'
+sudo apt-get install -y libpq-dev
+sudo apt-get update -y
+'"
+  echo "Done!"
+}
+
+
 function read_or_default () {
   if [[ ${#2} -eq 0 ]]; then
     echo "${1}"
@@ -82,6 +92,7 @@ function setup () {
   echo "${APP_ENV} ${APP_NAME} ${SSH_SERVER}"
 
   install_docker
+  install_accessories
   git_init
   git_remote_add
 }
