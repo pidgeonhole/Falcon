@@ -20,14 +20,11 @@ def create_app(location, settings_override=None):
     """
 
     app = Flask(__name__, instance_relative_config=True, static_folder="./static")
-    print(app.config.get('STATIC_ROOT', ''))
 
     if location.lower() == "local":
         app.config.from_object('config.settings')
-        app.config.from_pyfile('settings.py', silent=True)
     elif location.lower() in {'server', 'production'}:
         app.config.from_object('production.settings')
-        app.config.from_pyfile('settings.py', silent=True)
     else:
         raise ValueError("location argument not recognized")
 

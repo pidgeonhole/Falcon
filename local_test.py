@@ -1,4 +1,3 @@
-import os
 import argparse
 
 import cherrypy
@@ -9,7 +8,6 @@ from utils.u_database_ops import initialize
 
 def get_parser():
     p = argparse.ArgumentParser("Localhost settings")
-    p.add_argument('-l', '--local', type=str, default='1', help="Run local?")
     p.add_argument('-s', '--seed', action='store_true', help="Seed database")
 
     return p
@@ -20,9 +18,6 @@ if __name__ == '__main__':
     parser = get_parser()
     args = parser.parse_args()
 
-    # Put environment variable
-    os.environ["LOCAL"] = args.local
-
     app = create_app('local')
 
     # Run seeding ops
@@ -31,7 +26,7 @@ if __name__ == '__main__':
         initialize(app)
     print("%s: Running app in local environment. Development Mode." % __file__)
 
-    app.run()
+    app.run(host="0.0.0.0", port=5000)
     exit(0)
     # Mount the application
     cherrypy.tree.graft(app, "/")
