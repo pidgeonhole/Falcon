@@ -1,11 +1,11 @@
 FROM python:3.5.2-slim
 MAINTAINER Daniel Bok <daniel.bok@outlook.com>
 
-copy requirements.txt requirements.txt
+COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY . .
 
 EXPOSE 5000
 
-CMD python server.py
+CMD ["python", "./server.py"]
