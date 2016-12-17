@@ -258,11 +258,6 @@ var mdViewer = new Vue({
 `,
     computed: {
         markdown: function () {
-<<<<<<< HEAD:CodeQuiz/static/vue/hugefile.js
-            var converter = new showdown.Converter({extensions: ['sdkatex'] });
-            var html = converter.makeHtml(this.desc);
-            return html;
-=======
             try {
                 var converter = new showdown.Converter({
                     extensions: ['sdkatex']
@@ -270,7 +265,6 @@ var mdViewer = new Vue({
                 var html = converter.makeHtml(this.desc)
                 return html
             } catch (e) { /* When showdown.js script not loaded, skip this */ }
->>>>>>> client:CodeQuiz/static/vue/apps.js
         }
     },
     created: function () {

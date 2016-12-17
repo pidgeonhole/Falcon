@@ -14,27 +14,19 @@
     }
 }(function (showdown) {
     showdown.extension('sdkatex', function () {
-<<<<<<< HEAD
         // Katex extensions
         return [{
             type: 'lang',
             filter: function (text) {
-                return text.replace(/`katex\s([\S\$ \\\w]+)`/g, function (flag, match, end) {
-                    return katex.renderToString(match);
+                return text.replace(/\`katex\s([\S ]*)[\s]?\`/g, function (flag, match, end) {
+                    return katex.renderToString(match)
                 })
             }
         }, {
             type: 'lang',
             filter: function (text) {
                 return text.replace(/```katex\n([\S]+)\n```/g, function (flag, match, end) {
-                    return katex.renderToString(match);
-=======
-        return [{
-            type: 'lang',
-            filter: function (text) {
-                return text.replace(/\`katex\s([\S ]*)[\s]?\`/g, function (flag, match, end) {
                     return katex.renderToString(match)
->>>>>>> client
                 })
             }
         }]

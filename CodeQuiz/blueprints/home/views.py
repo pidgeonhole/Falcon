@@ -26,11 +26,7 @@ def index():
 @home.route('/tutorial')
 def tutorial():
     payload.update({
-<<<<<<< HEAD
-        'title': "Tutorial",
-=======
-        'title'  : "ESD Codes",
->>>>>>> client
+        'title'  : "Tutorial",
         'tagline': "Pick me up."
     })
     return render_template('page/tutorial.html', **payload)
