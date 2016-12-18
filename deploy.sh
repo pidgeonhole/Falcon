@@ -78,13 +78,13 @@ sudo chmod +x ${DIRECTORY}.git/hooks/post-receive
 
 function help_menu () {
 cat << EOF
-Usage: deploy (-h | -s | -g | -r)
+Usage: deploy (-h | -s | -req | -r)
 
 OPTIONS:
    -h|--help                  Show this message
    -c|--copy-hook             Copy post-receive hook over
    -s|--setup                 Setup environment for server and development
-   -g|--get-lib               Prints external application dependencies into requirements.txt
+   --req-txt                  Prints external application dependencies into requirements.txt
    -r|--run                   Commits application production and runs it
 
 EXAMPLES:
@@ -100,7 +100,7 @@ EXAMPLES:
   Commits application to production git and run it:
        $ deploy -r
 EOF
-}
+
 
 # If no commands
 if (( $# == 0 )); then
@@ -118,7 +118,8 @@ HOOK_FLAG=0
 while [[ $# > 0 ]]
 do
 case "${1}" in
-  -g|--get-lib)
+  --req-txt)
+  echo "H1"
   GET_LIB_FLAG=1
   shift
   ;;
@@ -154,7 +155,8 @@ if (( ${HELP_FLAG} == 1 )); then
   fi
 else
   if (( ${GET_LIB_FLAG} == 1)); then
-    get_requirements
+    echo "Here"
+#    get_requirements
   fi
   if (( ${SETUP_FLAG} == 1 )); then
     ${DEVOPS_FOLDER}/setup.sh
