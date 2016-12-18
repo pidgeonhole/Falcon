@@ -53,10 +53,7 @@ function git_remote_add () {
 
 function install_accessories () {
   echo "Installing Accessory Software"
-  ssh -t "${SSH_SERVER}" bash -c "'
-sudo apt-get install -y libpq-dev
-sudo apt-get update -y
-'"
+#  ssh -t "${SSH_SERVER}" bash -c "''"
   echo "Done!"
 }
 
