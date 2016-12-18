@@ -1,8 +1,8 @@
 FROM python:3.5.2-slim
 MAINTAINER Daniel Bok <daniel.bok@outlook.com>
 
-ARG SECRET_KEY
-ARG DATABASE
+ENV SECRET_KEY ${printenv | grep -oP "SECRET_KEY=\S+" | cut -d= -f2}
+ENV DATABASE ${printenv | grep -oP "DATABASE=\S+" | cut -d= -f2}
 
 RUN apt-get update && apt-get install -y python3-dev libpq-dev build-essential
 
