@@ -17,7 +17,6 @@ TAG="${REPO_NAME_LOWER}:latest"
 
 # Substitute env var into new DockerFile
 cat ${GIT_WORK_TREE}/DockerfileTemplate | envsubst | cat > ${GIT_WORK_TREE}/Dockerfile
-cat ${GIT_WORK_TREE}/Dockerfile
 
 # Build the image with the proper commit tag.
 docker stop ${APP_NAME}
