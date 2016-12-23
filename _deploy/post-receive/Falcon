@@ -2,8 +2,8 @@
 
 unset GIT_INDEX_FILE
 
-REPO_NAME="CodeQuiz"
-REPO_NAME_LOWER="codequiz"
+REPO_NAME="Falcon"
+REPO_NAME_LOWER="falcon"
 APP_NAME="app"
 
 # Check out the newest version of the code.
@@ -14,6 +14,9 @@ git --work-tree=${GIT_WORK_TREE} --git-dir=${GIT_WORK_TREE}.git checkout -f
 
 TAG="$(git log --pretty=format:'%h' -n 1)"
 TAG="${REPO_NAME_LOWER}:latest"
+
+# Substitute env var into new DockerFile
+cat ${GIT_WORK_TREE}/Dockerfile | envsubst > ${GIT_WORK_TREE}/Dockerfile
 
 # Build the image with the proper commit tag.
 docker stop ${APP_NAME}

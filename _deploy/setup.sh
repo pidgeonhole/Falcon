@@ -7,16 +7,16 @@ SSH_USER="${SSH_USER:-$(whoami | awk '{print tolower($0)}')}"
 KEY_USER="${KEY_USER:-$(whoami | awk '{print tolower($0)}')}"
 SSH_SERVER="${SSH_USER}@${SERVER_IP}"
 DOCKER_VERSION="${DOCKER_VERSION:-1.12.3}"
-APP_NAME="${APP_NAME:-CodeQuiz}"
+APP_NAME="${APP_NAME:-Falcon}"
 
 
 function install_docker () {
   echo "Configuring Docker v${DOCKER_VERSION}..."
   ssh -t "${SSH_SERVER}" bash -c "'
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 echo \"deb https://apt.dockerproject.org/repo ubuntu-xenial main\" | sudo tee /etc/apt/sources.list.d/docker.list
-sudo apt-get update
+sudo apt-get update -y
 apt-cache policy docker-engine
 sudo apt-get install -y docker-engine
 sudo systemctl status docker
@@ -26,7 +26,7 @@ sudo usermod -aG docker $(whoami | awk '{print tolower($0)}')
 }
 
 function git_init () {
-    DIRECTORY="/var/www/${APP_NAME}"
+    local DIRECTORY="/var/www/${APP_NAME}"
     echo "Initialize git repo and hooks..."
     scp "post-receive/${APP_NAME}" "${SSH_SERVER}:/tmp/${APP_NAME}"
     ssh -t "${SSH_SERVER}" bash -c "'

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 DEVOPS_FOLDER="./_deploy"
+APP_NAME="Falcon"
 
 function get_requirements () {
     local VENV="web3"
@@ -38,7 +39,7 @@ function get_requirements () {
 function run_application () {
     local COMMENT=""
     local ENV="production"
-    local IP="http://139.59.241.214:3000/v1/"
+    local IP="http://139.59.241.214/v3/"
 
     while [[ ${#COMMENT} -lt 1 ]]; do
         echo -n "Comment for git commit: "
@@ -58,8 +59,8 @@ function run_application () {
       IP=${TEMP}
     fi
 
-    echo "Preparing static files with Webpack. This may take a while.."
-    NODE_ENV=production IP="${IP}" webpack
+#    echo "Preparing static files with Webpack. This may take a while.."
+#    NODE_ENV=production IP="${IP}" webpack
     echo "Committing to git"
     git commit -am "${COMMENT}"
     echo "Pushing to ${ENV}"
@@ -100,6 +101,7 @@ EXAMPLES:
   Commits application to production git and run it:
        $ deploy -r
 EOF
+}
 
 
 # If no commands
@@ -155,7 +157,7 @@ if (( ${HELP_FLAG} == 1 )); then
   fi
 else
   if (( ${GET_LIB_FLAG} == 1)); then
-    echo "Here"
+    echo "Getting Requirements"
 #    get_requirements
   fi
   if (( ${SETUP_FLAG} == 1 )); then
@@ -165,6 +167,6 @@ else
     run_application
   fi
   if (( ${HOOK_FLAG} == 1 )); then
-    copy_hook
+    copy_hook_file
   fi
 fi
