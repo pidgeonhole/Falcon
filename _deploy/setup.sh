@@ -28,7 +28,8 @@ sudo usermod -aG docker $(whoami | awk '{print tolower($0)}')
 function git_init () {
     local DIRECTORY="/var/www/${APP_NAME}"
     echo "Initialize git repo and hooks..."
-    scp "post-receive/${APP_NAME}" "${SSH_SERVER}:/tmp/${APP_NAME}"
+    echo "Current Directory: $(pwd)"
+    scp "./_deploy/post-receive/${APP_NAME}" "${SSH_SERVER}:/tmp/${APP_NAME}"
     ssh -t "${SSH_SERVER}" bash -c "'
 sudo apt-get update && sudo apt-get install -y -q git
 sudo rm -rf ${DIRECTORY}.git ${DIRECTORY}
@@ -46,6 +47,7 @@ sudo chown -R ${KEY_USER}:${KEY_USER} ${DIRECTORY}
 function git_remote_add () {
   echo "Setting up git remotes..."
   local REMOTE="ssh://${KEY_USER}@${SERVER_IP}:/var/www/${APP_NAME}.git"
+  git remote add production ${REMOTE}
   echo "Done!"
 }
 
