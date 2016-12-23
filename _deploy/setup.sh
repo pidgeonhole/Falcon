@@ -46,8 +46,6 @@ sudo chown -R ${KEY_USER}:${KEY_USER} ${DIRECTORY}
 function git_remote_add () {
   echo "Setting up git remotes..."
   local REMOTE="ssh://${KEY_USER}@${SERVER_IP}:/var/www/${APP_NAME}.git"
-  (cd CodeQuiz ; git remote remove ${APP_ENV})
-  (cd ../CodeQuiz ; git remote add ${APP_ENV} ${REMOTE})
   echo "Done!"
 }
 
