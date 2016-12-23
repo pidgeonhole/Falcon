@@ -70,6 +70,8 @@ function run_application () {
 
 function copy_hook_file () {
     local DIRECTORY="/var/www/${APP_NAME}"
+    local SSH_SERVER="root@128.199.120.230"
+    echo "Copying Hook File"
     scp "${DEVOPS_FOLDER}/post-receive/${APP_NAME}" "${SSH_SERVER}:/tmp/${APP_NAME}"
     ssh -t "${SSH_SERVER}" bash -c "'
 sudo mv /tmp/${APP_NAME} ${DIRECTORY}.git/hooks/post-receive
