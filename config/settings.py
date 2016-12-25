@@ -1,9 +1,11 @@
+with open('config/SECRET.ENV') as f:
+    _data = {}
+    for _line in f.readlines():
+        _key, _value = _line.strip().split("=")
+        _data[_key] = _value
+
 DEBUG = True
 SECRET_KEY = "Don't Share This Key With Anyon3"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-db_uri = "postgresql://{username}:{password}@{addr}/{dbname}"
-
-with open('config/SECRET.ENV') as f:
-    addr, un, pw, dbname, ADMIN_PASSWORD = [_.strip() for _ in f.readlines()]
-
-SQLALCHEMY_DATABASE_URI = db_uri.format(username=un, password=pw, addr=addr, dbname=dbname)
+SQLALCHEMY_DATABASE_URI = _data['SQLALCHEMY_DATABASE_URI']
+ADMIN_PASSWORD = _data['ADMIN_PASSWORD']

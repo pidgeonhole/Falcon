@@ -9,7 +9,6 @@ from utils.u_database_ops import initialize
 def get_parser():
     p = argparse.ArgumentParser("Localhost settings")
     p.add_argument('-s', '--seed', action='store_true', help="Seed database")
-
     return p
 
 
@@ -25,7 +24,6 @@ if __name__ == '__main__':
         print("%s: Initializing and seeding database" % __file__)
         initialize(app)
     print("%s: Running app in local environment. Development Mode." % __file__)
-
     app.run(host="0.0.0.0", port=5000)
     exit(0)
     # Mount the application
