@@ -87,7 +87,7 @@ var codeMaster = new Vue({
     template: `
 <div>
     <div style="height: 30em">
-        <editor editor-id="editor" :content="code" v-on:change-content="changeCode" :lang="lang"></editor>
+        <editor editor-id= :content="code" v-on:change-content="changeCode" :lang="lang"></editor>
     </div>
     <div id="settings" role="tablist" aria-multiselectable="true" style="margin-top:1.5rem">
         <div class="card">
@@ -109,7 +109,7 @@ var codeMaster = new Vue({
                         </select>
                     </div>
                 </div>
-            </div>
+            </div>asd
         </div>
     </div>
     <button class="mbtn btn-block" @click="submit" :class="submitButtonClass" :disabled="this.loading">

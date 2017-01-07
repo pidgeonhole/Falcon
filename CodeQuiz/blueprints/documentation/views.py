@@ -15,6 +15,7 @@ def get_template(name, version):
     for f in os.listdir(os.path.join(folder, name)):
         vnum = int(f.split('.')[0].split('v')[-1])
         versions.append((f, vnum))
+
     if version == "latest":
         return max(versions, key=lambda x: x[1])[0]
 
@@ -32,6 +33,8 @@ def index():
 
 @docs.route('/<name>')
 @docs.route('/<name>/<version>')
-def questions(name, version="latest"):
+def questions(name, version=''):
+    if version == '':
+        return redirect(url_for('.questions', name=name, version='latest'))
     template = name + '/' + get_template(name, version)
     return render_template(template)

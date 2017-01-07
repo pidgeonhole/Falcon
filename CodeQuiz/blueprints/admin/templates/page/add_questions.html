@@ -16,12 +16,14 @@
             <label for="CategorySelect" class="col-sm-2 col-form-label">Category</label>
             <div class="col-sm-10">
                 <select id="CategorySelect" class="form-control" style="height: 2.5rem" v-model="category">
+                    <!-- Take categories from Jiayu's API, Make a select-text-input option here -->
                     <option value="Dynamic Programming">Dynamic Programming</option>
                     <option value="Linear Programming">Linear Programming</option>
                 </select>
             </div>
         </div>
         <div class="form-group row">
+            <!-- Test cases, are in tabs: something like a key value pair. Can add as many tabs as user likes -->
             <label for="TestCases" class="col-sm-2 col-form-label">Test Cases</label>
             <div class="col-sm-10">
                 <textarea id="TestCases" class="form-control">
@@ -44,7 +46,10 @@ Output: 30
         <h4>Description</h4>
     </div>
 </div>
-{% include 'components/markdown.editor.html' %}
+<!--{% include 'components/markdown.editor.html' %}-->
+
+<!-- VueJS editor here -->
+
 <div class="container">
     <div class="row padding-top-1 padding-bottom-1">
         <button class="btn btn-block btn-lg" data-toggle="modal" data-target="#SubmitModal">Submit</button>

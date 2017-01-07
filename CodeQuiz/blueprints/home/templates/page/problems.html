@@ -1,22 +1,7 @@
 {% extends 'layouts/common.html' %}
 <!-- -->
-{% block headScripts %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.6.0/katex.min.js"></script>
-<script src="/static/vendors/showdown/sd.js"></script>
-<script src="/static/vendors/showdown/sdkatex.js"></script>
-<script src="/static/vendors/ace-editor/ace.js"></script>
-{% endblock %}
-<!-- -->
-<!-- -->
 {% block main %}
 <div class="container">
-    <h2>Problem</h2>
-    <div id="md-preview"></div>
-    <h2>Solution</h2>
-    <div id="codeMaster"></div>
+    <div id="problems"></div>
 </div>
-{% endblock %}
-<!-- -->
-{% block scripts %}
 {% endblock %}

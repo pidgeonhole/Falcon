@@ -10,6 +10,10 @@ body {
     flex-direction: column;
 }
 
+.dropdown-header {
+    font-size: 1.2rem;
+}
+
 .main {
     flex: 1 0 auto;
     display: -ms-flex;
@@ -28,18 +32,6 @@ body {
 
 .hover-pointer:hover{
     cursor: pointer;
-}
-
-.icon-text-align-1 {
-    vertical-align: bottom;
-    font-size: 1.5rem;
-    font-weight: 100;
-}
-
-.icon-text-align-3 {
-    vertical-align: middle;
-    font-size: 3rem;
-    font-weight: 100;
 }
 
 .intro-bar {
@@ -81,36 +73,6 @@ body {
 
 .pad-sides {
     padding: 0.5rem;
-}
-
-.problem-card {
-    background-color: #FAFAFA;
-    color: #616161;
-}
-
-.problem-card:hover {
-    background-color: #616161;
-    color: #FAFAFA;
-    cursor: pointer;
-}
-
-.problem-list {
-    list-style: none;
-    padding-left: 0rem;
-    margin-bottom: 0.5rem;
-}
-
-.problem-item {
-    margin-bottom: 0rem;
-    margin-top: 1rem;
-    padding: 1rem 2rem
-}
-
-.problem-item:hover {
-    background-color: #009688;
-    color: #E0F2F1;
-    font-weight: 400;
-    cursor: pointer;
 }
 
 .section {

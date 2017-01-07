@@ -6,10 +6,10 @@ from utils.u_funcs import get_static
 
 home = Blueprint('home', __name__, template_folder='templates')
 
-js, css = get_static(['components', 'apps', 'common'], folders=('vue', 'css'))
+js, css = get_static(['common'])
 
 payload = {
-    'js' : js,
+    'js': js,
     'css': css,
 }
 
@@ -17,7 +17,7 @@ payload = {
 @home.route('/')
 def index():
     payload.update({
-        'title'  : "Welcome",
+        'title': "Welcome",
         'tagline': "to something fun"
     })
     return render_template('page/index.html', **payload)
@@ -26,7 +26,7 @@ def index():
 @home.route('/tutorial')
 def tutorial():
     payload.update({
-        'title'  : "Tutorial",
+        'title': "Tutorial",
         'tagline': "Pick me up."
     })
     return render_template('page/tutorial.html', **payload)
@@ -35,12 +35,10 @@ def tutorial():
 @home.route('/problems/')
 @home.route('/problems/<name>')
 def problems(name=""):
-    if not name:
-        return redirect(url_for('.index'))
     payload.update({
-        'title'  : "Problems",
+        'title': "Problems",
         "tagline": "I'm owning this.",
-        'name'   : name
+        'name': name
     })
 
     return render_template("page/problems.html", **payload)

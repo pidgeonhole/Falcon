@@ -10,7 +10,7 @@ user = Blueprint('user', __name__, template_folder='templates')
 
 # Helper variables
 get, post, both = ["GET"], ["POST"], ['GET', 'POST']
-js, css = get_static(['apps', 'components', 'common'], folders=('vue', 'css'))
+js, css = get_static(['apps', 'components', 'common'], folders=('vue-past', 'css'))
 
 payload = {
     'js' : js,

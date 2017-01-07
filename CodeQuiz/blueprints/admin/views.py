@@ -32,10 +32,20 @@ def index():
     return render_template("page/dashboard.html", **payload)
 
 
-@admin.route('/questions')
-def questions():
+@admin.route('/questions/new')
+def add_questions():
     payload.update({
         'title'  : "Making your questions",
         'tagline': 'has never been easier..'
     })
-    return render_template("page/questions.html", **payload)
+    return render_template("page/add_questions.html", **payload)
+
+
+@admin.route('/questions')
+@admin.route('/questions/edit')
+def edit_questions():
+    payload.update({
+        'title'  : 'Editing questions',
+        'tagline': 'piece of cake..'
+    })
+    return "Under Construction"

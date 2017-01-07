@@ -24,15 +24,17 @@ def get_icon(n: int = 1):
     return icons
 
 
-def get_static(files: list, folders=('', 'vue', 'css')):
+def get_static(files: list, folders=('vue', 'css')):
     """
     Returns list of static files. The list will be passed to flask which will then render them in HTML.
     This way, static files are called automatically.
     :param files: files to be called in base template
-    :param dev: get static files in dev mode
+    :param entrypoints: js files which have to be at the back because they require prior js files
     :param folders: default folders to get from
     :return: List of static file names
     """
+
+    prefix = os.environ.get('FRONTEND', '')
 
     static_folder = os.path.join(__BASE_DIR, 'CodeQuiz', 'static')
     js = deque()
@@ -41,16 +43,19 @@ def get_static(files: list, folders=('', 'vue', 'css')):
     for h in folders:
         for i in os.listdir(os.path.join(static_folder, h)):
             for j in files:
+
                 f = "/static/%s/%s" % (h, i)
+
                 if i.endswith('.js') and j in i and i.startswith(j):
-                    if i.startswith('app'):
-                        js.append(f)
-                    else:
-                        js.appendleft(f)
+                    js.append(f)
                     break
+
                 elif i.endswith('.css') and j in i and i.startswith(j):
                     css.append(f)
                     break
+
+    if prefix:
+        js = ["%s/static/vue/common.js" % prefix]
     return js, css
 
 
