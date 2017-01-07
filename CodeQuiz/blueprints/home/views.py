@@ -33,12 +33,14 @@ def tutorial():
 
 
 @home.route('/problems/')
-@home.route('/problems/<name>')
-def problems(name=""):
+@home.route('/problems/<path>')
+@home.route('/problems/<path:path>')
+def problems(path=""):
     payload.update({
         'title': "Problems",
-        "tagline": "I'm owning this.",
-        'name': name
+        "tagline": "I'm owning this."
     })
 
+    if not path.replace('/', '').isnumeric() and len(path) > 0:
+        return redirect(url_for('.problems'))
     return render_template("page/problems.html", **payload)

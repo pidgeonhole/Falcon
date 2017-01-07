@@ -10,10 +10,10 @@ user = Blueprint('user', __name__, template_folder='templates')
 
 # Helper variables
 get, post, both = ["GET"], ["POST"], ['GET', 'POST']
-js, css = get_static(['apps', 'components', 'common'], folders=('vue-past', 'css'))
+js, css = get_static(['common'])
 
 payload = {
-    'js' : js,
+    'js': js,
     'css': css,
 }
 
@@ -40,9 +40,9 @@ def login():
             flash(message, 'error')
 
     payload.update({
-        'title'  : 'Login',
+        'title': 'Login',
         'tagline': 'Go in~ Have fun~',
-        'form'   : form
+        'form': form
     })
     return render_template('user/login.html', **payload)
 
@@ -69,9 +69,9 @@ def signup():
             return redirect(url_for('home.index'))
 
     payload.update({
-        'title'  : 'Sign up',
+        'title': 'Sign up',
         'tagline': 'Start of your wonderful journey',
-        'form'   : form
+        'form': form
     })
 
     return render_template('user/signup.html', **payload)
