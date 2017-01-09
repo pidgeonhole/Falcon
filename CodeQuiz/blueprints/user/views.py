@@ -4,17 +4,20 @@ from flask_login import login_required, login_user, current_user, logout_user
 from .decorators import anonymous_required
 from .forms import LoginForm, SignupForm
 from .models import User
-from utils.u_funcs import get_static, safe_url
+from utils.u_funcs import get_static, safe_url, get_vendor_files
 
 user = Blueprint('user', __name__, template_folder='templates')
 
 # Helper variables
 get, post, both = ["GET"], ["POST"], ['GET', 'POST']
 js, css = get_static(['common'])
+vendor_js, vendor_css = get_vendor_files()
 
 payload = {
     'js': js,
     'css': css,
+    "vendor_js": vendor_js,
+    "vendor_css": vendor_css
 }
 
 

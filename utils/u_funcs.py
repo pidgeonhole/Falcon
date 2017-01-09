@@ -24,7 +24,7 @@ def get_icon(n: int = 1):
     return icons
 
 
-def get_static(files: list, exc = (), folders=('vue', 'css')):
+def get_static(files: list, exc=(), folders=('vue', 'css')):
     """
     Returns list of static files. The list will be passed to flask which will then render them in HTML.
     This way, static files are called automatically.
@@ -41,6 +41,10 @@ def get_static(files: list, exc = (), folders=('vue', 'css')):
     css = deque()
 
     for h in folders:
+
+        if prefix and h == 'vue':
+            continue
+
         for i in os.listdir(os.path.join(static_folder, h)):
             for listed_files in files:
 
@@ -56,6 +60,42 @@ def get_static(files: list, exc = (), folders=('vue', 'css')):
 
     if prefix and ('%s/static/vue/admin.js' % prefix) not in js:
         js.append('%s/static/vue/admin.js' % prefix)
+        js.append('%s/static/vue/common.js' % prefix)
+        # js.append('%s/static/vue/shared.js' % prefix)
+    return js, css
+
+
+def get_vendor_files():
+    vendors = os.path.join(__BASE_DIR, 'CodeQuiz', 'static', 'vendors')
+
+    js, css = deque(), []
+
+    for library in os.listdir(vendors):
+
+        if library in {'prism'}:
+            continue
+
+        for name in os.listdir(os.path.join(vendors, library)):
+            path = "/static/vendors/{library}/{name}".format(library=library, name=name)
+
+            if name.endswith('.css'):
+                css.append(path)
+                continue
+
+            if name.startswith('jquery'):
+                js.appendleft(path)
+                continue
+
+            elif name.startswith('tether'):
+                if js[0].endswith('jquery.js'):
+                    js.insert(1, path)
+                else:
+                    js.appendleft(path)
+                continue
+
+            else:
+                js.append(path)
+
     return js, css
 
 

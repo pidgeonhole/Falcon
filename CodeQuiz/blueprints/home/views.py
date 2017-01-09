@@ -2,22 +2,26 @@ import os
 
 from flask import Blueprint, render_template, redirect, url_for
 
-from utils.u_funcs import get_static
+from utils.u_funcs import get_static, get_vendor_files
 
 home = Blueprint('home', __name__, template_folder='templates')
 
 js, css = get_static(['common'])
+vendor_js, vendor_css = get_vendor_files()
 
 payload = {
+    'title': 'ESD Codes',
     'js': js,
     'css': css,
+    "vendor_js": vendor_js,
+    "vendor_css": vendor_css
 }
 
 
 @home.route('/')
 def index():
     payload.update({
-        'title': "Welcome",
+        'tag': "Welcome",
         'tagline': "to something fun"
     })
     return render_template('page/index.html', **payload)
@@ -26,7 +30,7 @@ def index():
 @home.route('/tutorial')
 def tutorial():
     payload.update({
-        'title': "Tutorial",
+        'tag': "Tutorial",
         'tagline': "Pick me up."
     })
     return render_template('page/tutorial.html', **payload)
@@ -37,7 +41,7 @@ def tutorial():
 @home.route('/problems/<path:path>')
 def problems(path=""):
     payload.update({
-        'title': "Problems",
+        'tag': "Problems",
         "tagline": "I'm owning this."
     })
 

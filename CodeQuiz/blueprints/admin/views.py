@@ -2,16 +2,19 @@ from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
 
 from CodeQuiz.blueprints.user.decorators import role_required
-from utils.u_funcs import get_static
+from utils.u_funcs import get_static, get_vendor_files
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
 js, css = get_static(['common', 'admin'])
+vendor_js, vendor_css = get_vendor_files()
 
 payload = {
     "title": "Admin",
     "js": js,
-    "css": css
+    "css": css,
+    "vendor_js": vendor_js,
+    "vendor_css": vendor_css
 }
 
 
@@ -31,7 +34,7 @@ def before_request():
 @admin.route('/')
 def index():
     payload.update({
-        "title": "Admin Dashboard",
+        "tag": "Admin Dashboard",
         "tagline": "Let's see everything"
     })
     return render_template("page/dashboard.html", **payload)
@@ -42,7 +45,7 @@ def index():
 @admin.route('/questions/<path:path>')
 def questions(path=''):
     payload.update({
-        'title': 'Dealing with problems',
+        'tag': 'Dealing with problems',
         'tagline': 'has never been easier'
     })
 
