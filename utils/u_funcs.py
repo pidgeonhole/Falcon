@@ -24,12 +24,11 @@ def get_icon(n: int = 1):
     return icons
 
 
-def get_static(files: list, folders=('vue', 'css')):
+def get_static(exc=(), folders=('vue', 'css')):
     """
     Returns list of static files. The list will be passed to flask which will then render them in HTML.
     This way, static files are called automatically.
-    :param files: files to be called in base template
-    :param entrypoints: js files which have to be at the back because they require prior js files
+    :param exc: explicitly excluded files
     :param folders: default folders to get from
     :return: List of static file names
     """
@@ -40,22 +39,63 @@ def get_static(files: list, folders=('vue', 'css')):
     js = deque()
     css = deque()
 
-    for h in folders:
-        for i in os.listdir(os.path.join(static_folder, h)):
-            for j in files:
+    for folder in folders:
 
-                f = "/static/%s/%s" % (h, i)
+        if prefix and folder == 'vue':
+            continue
 
-                if i.endswith('.js') and j in i and i.startswith(j):
-                    js.append(f)
-                    break
+        for _file in os.listdir(os.path.join(static_folder, folder)):
 
-                elif i.endswith('.css') and j in i and i.startswith(j):
-                    css.append(f)
-                    break
+            if _file in exc:
+                continue
+            file_path = '/static/%s/%s' % (folder, _file)
+
+            if _file.endswith('.js'):
+                if _file.startswith("shared"):
+                    js.appendleft(file_path)
+                else:
+                    js.append(file_path)
+            elif _file.endswith('.css'):
+                css.append(file_path)
 
     if prefix:
-        js = ["%s/static/vue/common.js" % prefix]
+        for _file in ['shared', 'admin', 'common']:
+            js.append('%s/static/vue/%s.js' % (prefix, _file))
+
+    return js, css
+
+
+def get_vendor_files():
+    vendors = os.path.join(__BASE_DIR, 'CodeQuiz', 'static', 'vendors')
+
+    js, css = deque(), []
+
+    for library in os.listdir(vendors):
+
+        if library in {'prism'}:
+            continue
+
+        for name in os.listdir(os.path.join(vendors, library)):
+            path = "/static/vendors/{library}/{name}".format(library=library, name=name)
+
+            if name.endswith('.css'):
+                css.append(path)
+                continue
+
+            if name.startswith('jquery'):
+                js.appendleft(path)
+                continue
+
+            elif name.startswith('tether'):
+                if js[0].endswith('jquery.js'):
+                    js.insert(1, path)
+                else:
+                    js.appendleft(path)
+                continue
+
+            else:
+                js.append(path)
+
     return js, css
 
 

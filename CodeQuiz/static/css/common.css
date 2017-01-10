@@ -1,24 +1,43 @@
-.brand-logo-center {
-    font-size: 3rem;
-    font-style: bold;
-    width: 100%
-}
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
 
 body {
+    font-family: 'Open Sans', sans-serif !important;
     display: flex;
-    min-height: 100vh;
     flex-direction: column;
 }
 
-.dropdown-header {
-    font-size: 1.2rem;
+label {
+    margin-bottom: 0;
+    text-align: end;
+    padding: 0.5rem;
 }
 
-.main {
+main {
+    min-height: 25rem;
     flex: 1 0 auto;
     display: -ms-flex;
     display: -webkit-flex;
     display: flex;
+}
+
+/*
+small { font-size: 1.3rem !important; }
+a, p, h6, span, label, option { font-size: 1.5rem !important; }
+select { font-size: 1.5rem !important; height: 3.2rem !important; }
+h5 { font-size: 1.8rem !important; }
+h4 { font-size: 2.3rem !important; }
+h3, i { font-size: 2.8 rem !important; }
+h2 { font-size: 3.4rem !important; }
+h1 { font-size: 4rem !important; }
+*/
+
+.borders {
+    padding: 0 1rem 1rem 1rem;
+    border: solid #f7f7f9;
+}
+
+.br-0 {
+    border-radius: 0;
 }
 
 .footer {
@@ -28,10 +47,6 @@ body {
 .footer-content {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
-}
-
-.hover-pointer:hover{
-    cursor: pointer;
 }
 
 .intro-bar {
@@ -53,10 +68,6 @@ body {
 .layout-fill {
     height: 100%;
     width: 100%;
-}
-
-.mdc-bg-white {
-    background-color: #ffffff;
 }
 
 .no-pad {
@@ -118,18 +129,6 @@ body {
     background-color: #00796b !important;
     color: #f5f5f5 !important;
     font-weight: 400;
-}
-
-.top-nav {
-    height: 10rem;
-}
-
-.visible {
-    visibility: visible
-}
-
-.not-visible {
-    visibility: hidden
 }
 
 .width-fill {

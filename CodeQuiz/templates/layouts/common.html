@@ -6,15 +6,15 @@
     <!--Let browser know website is optimized for mobile, but it isn't cause Daniel can't be bothered atm-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ title }}</title>
-    <!-- Roboto Fonts -->
+
+    <!-- Roboto Fonts and Material Icons -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="/static/vendors/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/vendors/bootstrap-flex.min.css">
-    <!-- Material Color Palette -->
-    <link rel="stylesheet" href="/static/vendors/mdc.min.css">
+
+    {% for f in vendor_css %}
+    <link rel="stylesheet" href="{{ f }}">
+    {% endfor %}
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/buttons.css">
@@ -28,18 +28,16 @@
 {% include 'headers/common_header.html' %}
 <div class="layout-fill mdc-bg-teal-700 mdc-text-grey-100 intro-bar shadow-depth-2">
     <div class="container">
-        <h1 class="intro-title">{{title}}</h1>
-        <span class="intro-tag mdc-text-teal-100">{{tagline}}</span>
+        <h1 class="intro-title">{{ tag }}</h1>
+        <span class="intro-tag mdc-text-teal-100">{{ tagline }}</span>
     </div>
 </div>
-<main class="main">
-    {% block main %} {% endblock %}
-</main>
+{% block main %} {% endblock %}
 <footer class="footer shadow-depth-2">
     <div class="layout-fill mdc-bg-teal-700 mdc-text-grey-100 footer-content">
         <div class="container">
-            <div class="row">
-                <div class="col-xs">
+            <div class="d-flex">
+                <div class="col">
                     <h5 class="mdc-text-grey-100">Help the team</h5>
                     <p class="mdc-text-grey-100">
                         We hope you've enjoyed using this application and hope that it has been fruitful for you. If
@@ -48,7 +46,7 @@
                         to contact any of us if you'd like to contribute
                     </p>
                 </div>
-                <div class="col-xs">
+                <div class="col">
                     <h5 class="mdc-text-grey-100">
                         Connect with us
                     </h5>
@@ -60,12 +58,16 @@
         </div>
     </div>
 </footer>
-<script src="/static/vendors/jquery-3.1.1.min.js"></script>
-<script src="/static/vendors/tether.min.js"></script>
-<script src="/static/vendors/bootstrap.min.js"></script>
+
+{% for f in vendor_js %}
+<script src="{{ f }}"></script>
+{% endfor %}
+
+
 {% for f in js %}
 <script src="{{ f }}"></script>
 {% endfor %}
+
 {% block scripts %} {% endblock %}
 </body>
 

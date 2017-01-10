@@ -4,17 +4,20 @@ from flask_login import login_required, login_user, current_user, logout_user
 from .decorators import anonymous_required
 from .forms import LoginForm, SignupForm
 from .models import User
-from utils.u_funcs import get_static, safe_url
+from utils.u_funcs import get_static, safe_url, get_vendor_files
 
 user = Blueprint('user', __name__, template_folder='templates')
 
 # Helper variables
 get, post, both = ["GET"], ["POST"], ['GET', 'POST']
-js, css = get_static(['apps', 'components', 'common'], folders=('vue-past', 'css'))
+js, css = get_static(['admin'])
+vendor_js, vendor_css = get_vendor_files()
 
 payload = {
-    'js' : js,
+    'js': js,
     'css': css,
+    "vendor_js": vendor_js,
+    "vendor_css": vendor_css
 }
 
 
@@ -40,9 +43,9 @@ def login():
             flash(message, 'error')
 
     payload.update({
-        'title'  : 'Login',
+        'title': 'Login',
         'tagline': 'Go in~ Have fun~',
-        'form'   : form
+        'form': form
     })
     return render_template('user/login.html', **payload)
 
@@ -69,9 +72,9 @@ def signup():
             return redirect(url_for('home.index'))
 
     payload.update({
-        'title'  : 'Sign up',
+        'title': 'Sign up',
         'tagline': 'Start of your wonderful journey',
-        'form'   : form
+        'form': form
     })
 
     return render_template('user/signup.html', **payload)

@@ -1,12 +1,20 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
 
 from CodeQuiz.blueprints.user.decorators import role_required
+from utils.u_funcs import get_static, get_vendor_files
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
+js, css = get_static()
+vendor_js, vendor_css = get_vendor_files()
+
 payload = {
-    "title": "Admin"
+    "title": "Admin",
+    "js": js,
+    "css": css,
+    "vendor_js": vendor_js,
+    "vendor_css": vendor_css
 }
 
 
@@ -26,26 +34,27 @@ def before_request():
 @admin.route('/')
 def index():
     payload.update({
-        "title"  : "Admin Dashboard",
+        "tag": "Admin Dashboard",
         "tagline": "Let's see everything"
     })
     return render_template("page/dashboard.html", **payload)
 
 
-@admin.route('/questions/new')
-def add_questions():
+@admin.route('/questions/')
+@admin.route('/questions/<path>')
+@admin.route('/questions/<path>/edit')
+@admin.route('/questions/<path:path>')
+def questions(path=''):
     payload.update({
-        'title'  : "Making your questions",
-        'tagline': 'has never been easier..'
+        'tag': 'Dealing with problems',
+        'tagline': 'has never been easier'
     })
-    return render_template("page/add_questions.html", **payload)
 
+    print(path)
 
-@admin.route('/questions')
-@admin.route('/questions/edit')
-def edit_questions():
-    payload.update({
-        'title'  : 'Editing questions',
-        'tagline': 'piece of cake..'
-    })
-    return "Under Construction"
+    path = path.replace('/', '')
+    if len(path) > 0:
+        if not (path in {'add'} or path.isnumeric()):
+            return redirect(url_for('.questions'))
+
+    return render_template('page/questions.html', **payload)
