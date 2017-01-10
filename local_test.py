@@ -28,7 +28,7 @@ if __name__ == '__main__':
         initialize(app)
 
     # Set where to load static files from
-    if args.frontend or True:
+    if args.frontend:
         address = "http://localhost:8080"
         print("%s: Attaching local front-end server at %s" % (__file__, address))
         os.environ['FRONTEND'] = address

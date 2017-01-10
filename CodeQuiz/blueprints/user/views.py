@@ -10,7 +10,7 @@ user = Blueprint('user', __name__, template_folder='templates')
 
 # Helper variables
 get, post, both = ["GET"], ["POST"], ['GET', 'POST']
-js, css = get_static(['common'])
+js, css = get_static(['admin'])
 vendor_js, vendor_css = get_vendor_files()
 
 payload = {

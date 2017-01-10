@@ -24,12 +24,11 @@ def get_icon(n: int = 1):
     return icons
 
 
-def get_static(files: list, exc=(), folders=('vue', 'css')):
+def get_static(exc=(), folders=('vue', 'css')):
     """
     Returns list of static files. The list will be passed to flask which will then render them in HTML.
     This way, static files are called automatically.
-    :param files: files to be called in base template
-    :param exc: excluded files
+    :param exc: explicitly excluded files
     :param folders: default folders to get from
     :return: List of static file names
     """
@@ -40,28 +39,29 @@ def get_static(files: list, exc=(), folders=('vue', 'css')):
     js = deque()
     css = deque()
 
-    for h in folders:
+    for folder in folders:
 
-        if prefix and h == 'vue':
+        if prefix and folder == 'vue':
             continue
 
-        for i in os.listdir(os.path.join(static_folder, h)):
-            for listed_files in files:
+        for _file in os.listdir(os.path.join(static_folder, folder)):
 
-                f = "/static/%s/%s" % (h, i)
+            if _file in exc:
+                continue
+            file_path = '/static/%s/%s' % (folder, _file)
 
-                if i.endswith('.js') and listed_files in i and i.startswith(listed_files):
-                    js.append(f)
-                    break
+            if _file.endswith('.js'):
+                if _file.startswith("shared"):
+                    js.appendleft(file_path)
+                else:
+                    js.append(file_path)
+            elif _file.endswith('.css'):
+                css.append(file_path)
 
-                elif i.endswith('.css') and listed_files in i and i.startswith(listed_files):
-                    css.append(f)
-                    break
+    if prefix:
+        for _file in ['shared', 'admin', 'common']:
+            js.append('%s/static/vue/%s.js' % (prefix, _file))
 
-    if prefix and ('%s/static/vue/admin.js' % prefix) not in js:
-        js.append('%s/static/vue/admin.js' % prefix)
-        js.append('%s/static/vue/common.js' % prefix)
-        # js.append('%s/static/vue/shared.js' % prefix)
     return js, css
 
 

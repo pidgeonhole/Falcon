@@ -6,7 +6,7 @@ from utils.u_funcs import get_static, get_vendor_files
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
-js, css = get_static(['common', 'admin'])
+js, css = get_static()
 vendor_js, vendor_css = get_vendor_files()
 
 payload = {
@@ -42,6 +42,7 @@ def index():
 
 @admin.route('/questions/')
 @admin.route('/questions/<path>')
+@admin.route('/questions/<path>/edit')
 @admin.route('/questions/<path:path>')
 def questions(path=''):
     payload.update({
@@ -49,7 +50,11 @@ def questions(path=''):
         'tagline': 'has never been easier'
     })
 
-    if not path.replace('/', '').isnumeric() and len(path) > 0:
-        return redirect(url_for('.questions'))
+    print(path)
+
+    path = path.replace('/', '')
+    if len(path) > 0:
+        if not (path in {'add'} or path.isnumeric()):
+            return redirect(url_for('.questions'))
 
     return render_template('page/questions.html', **payload)

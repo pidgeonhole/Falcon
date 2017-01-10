@@ -6,7 +6,7 @@ from utils.u_funcs import get_static, get_vendor_files
 
 home = Blueprint('home', __name__, template_folder='templates')
 
-js, css = get_static(['common'])
+js, css = get_static(['admin'])
 vendor_js, vendor_css = get_vendor_files()
 
 payload = {
