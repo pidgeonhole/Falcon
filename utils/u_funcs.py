@@ -59,7 +59,7 @@ def get_static(exc=(), folders=('vue', 'css')):
                 css.append(file_path)
 
     if prefix:
-        for _file in ['shared', 'admin', 'common']:
+        for _file in ['admin', 'common']:
             js.append('%s/static/vue/%s.js' % (prefix, _file))
 
     return js, css

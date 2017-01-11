@@ -45,6 +45,7 @@ def index():
 @admin.route('/questions/<path>/edit')
 @admin.route('/questions/<path:path>')
 def questions(path=''):
+
     payload.update({
         'tag': 'Dealing with problems',
         'tagline': 'has never been easier'
